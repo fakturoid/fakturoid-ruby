@@ -1,8 +1,9 @@
+require 'fakturoid/api/arguments'
 require 'fakturoid/api/http_methods'
-
 
 module Fakturoid
   class Api
+    extend Arguments
     extend HttpMethods
     
     def self.configure(&block)
