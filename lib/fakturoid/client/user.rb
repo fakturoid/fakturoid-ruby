@@ -6,7 +6,7 @@ module Fakturoid
       end
       
       def self.find(id)
-        raise ArgumentError, "ID has to be integer" unless id.is_a?(Integer)
+        raise ArgumentError, "Wrong ID given: #{id}" unless id.is_a?(Integer)
         
         get_request("users/#{id}.json")
       end
