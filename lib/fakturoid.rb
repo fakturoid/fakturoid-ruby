@@ -24,7 +24,7 @@ module Fakturoid
   end
   
   class AuthenticationError < ApiError; end
-  class ReadOnlyUserError   < ApiError; end
+  class RecordNotFoundError < ApiError; end
   class BlockedAccountError < ApiError; end 
   
   def self.configure(&block)

@@ -33,7 +33,7 @@ module Fakturoid
       case status_code
         when 401 then raise error(AuthenticationError, "Authentification failed")
         when 402 then raise error(BlockedAccountError, "Account is blocked")
-        when 404 then raise error(ReadOnlyUserError, "User is read only")
+        when 404 then raise error(RecordNotFoundError, "Record Not Found")
       end
     end
     
