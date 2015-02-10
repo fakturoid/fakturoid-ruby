@@ -8,8 +8,7 @@ module Fakturoid
       end
       
       def self.find(id)
-        raise ArgumentError, "Wrong ID given: #{id}" unless id.is_a?(Integer)
-        
+        validate_id(id)
         get_request("subjects/#{id}.json")
       end
       
@@ -24,14 +23,12 @@ module Fakturoid
       end
       
       def self.update(id, payload = {})
-        raise ArgumentError, "Wrong ID given: #{id}" unless id.is_a?(Integer)
-        
+        validate_id(id)
         patch_request("subjects/#{id}.json", payload: payload)
       end
       
       def self.delete(id)
-        raise ArgumentError, "Wrong ID given: #{id}" unless id.is_a?(Integer)
-        
+        validate_id(id)
         delete_request("subjects/#{id}.json")
       end
     end
