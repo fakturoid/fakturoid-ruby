@@ -6,8 +6,10 @@ module Fakturoid
       @response = faraday_response
       @caller = caller
       @env = faraday_response.env
-
-      @body = MultiJson.load(env.body) if !(env.body.nil? || env.body.empty? || env.body =~ /\A\s+\z/)
+      
+      if !(env.body.nil? || env.body.empty? || env.body =~ /\A\s+\z/)
+        @body = json? ? MultiJson.load(env.body) : env.body
+      end
       handle_response
     end
     
@@ -21,6 +23,10 @@ module Fakturoid
     
     def status_code
       env['status']
+    end
+    
+    def json?
+      env.request_headers['Content-Type'] == 'application/json'
     end
     
     def inspect

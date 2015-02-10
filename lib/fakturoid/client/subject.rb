@@ -13,8 +13,7 @@ module Fakturoid
       end
       
       def self.search(query)
-        raise ArgumentError, "Query parameter is required" if query.nil? || query.empty?
-        
+        validate_search_query(query)
         get_request("subjects/search.json", request_params: { query: query })
       end
       
