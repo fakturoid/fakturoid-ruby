@@ -20,7 +20,7 @@ module Fakturoid
       http_connection = connection(params)
       response = http_connection.send(method) do |req|
         req.url path, request_params
-        req.body = MultiJson.dump(params[:body]) if params.key?(:body)
+        req.body = MultiJson.dump(params[:payload]) if params.key?(:payload)
       end
       Response.new(response, caller)
     end
