@@ -5,7 +5,7 @@ module Fakturoid
         Request.new(:get, path, self).call(params)
       end
     
-      def post_request(params = {})
+      def post_request(path, params = {})
         Request.new(:post, path, self).call(params)
       end
     
