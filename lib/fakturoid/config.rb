@@ -11,7 +11,7 @@ module Fakturoid
     
     def user_agent
       if @user_agent.nil? || @user_agent.empty?
-        "#{account} (#{email})"
+        "Fakturoid ruby gem (#{email})"
       else
         @user_agent
       end
