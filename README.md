@@ -136,7 +136,7 @@ response = Fakturoid::Client::Invoice.find invoice_id
 
 To download invoice in PDF format you can use following code:
 
-```
+```ruby
 response = Fakturoid::Client::Invoice.download_pdf invoice_id
 
 File.open '/path/to/file.pdf', 'w' do |f|
