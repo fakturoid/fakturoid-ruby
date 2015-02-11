@@ -1,31 +1,228 @@
 # Fakturoid
 
-TODO: Write a gem description
+The Fakturoid gem is ruby library for API communication with web based invoicing service [www.fakturoid.cz](https://fakturoid.cz).
+Fakturoid [API documentation](http://docs.fakturoid.apiary.io) can be found on apiary. 
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'fakturoid'
+gem 'fakturoid', git: 'https://github.com/fakturoid/fakturoid-ruby.git'
 ```
 
-And then execute:
+And then run:
 
     $ bundle
 
-Or install it yourself as:
+Gem is not officially released and is under construction. So if you want to use it please install it from this repository
+and fix current commit with `:ref` option. API of the Fakturoid gem can be still changed.
 
-    $ gem install fakturoid
+## Configuration
+
+Fakturoid gem is configured within config block placed in `config/initializers/fakturoid.rb`:
+
+```ruby
+Fakturoid.configure do |config|
+  config.email = 'yourfakturoid@email.com'
+  config.api_key = 'fasdff823fdasWRFKW843ladfjklasdf834'
+  config.account = 'applecorp'
+  config.user_agent = 'Name of your app (your@email.com)'
+end
+```
 
 ## Usage
 
-TODO: Write usage instructions here
+### Account resource
 
-## Contributing
+To get informations about your account in Fakturoid run following code:
 
-1. Fork it ( https://github.com/[my-github-username]/fakturoid/fork )
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create a new Pull Request
+```ruby
+response = Fakturoid::Client::Account.current
+response.status_code # returns response http code
+response.body # contains hash with returned body
+```
+
+Accessing content of returned body:
+
+```ruby
+response.body['name'] # return name of your company
+response.name # alternative way of getting the name of your company
+```
+
+For the list of all returned account fields see the [Account API documentation](http://docs.fakturoid.apiary.io/#account)
+
+### Users resource
+
+For the information about current user use following code:
+
+```ruby
+response = Fakturoid::Client::User.current
+```
+
+For all the users which belongs to current account:
+
+```ruby
+response = Fakturoid::Client::User.all
+```
+
+If you want to get information about one user which belongs to account use:
+
+```ruby
+response = Fakturoid::Client::User.find(user_id)
+```
+
+For the list of all returned user fields see the [Users API documentation](http://docs.fakturoid.apiary.io/#users)
+
+### Subjects resource
+
+To get all subjects run (Subjects are paginated by 20 per page):
+
+```ruby
+response = Fakturoid::Client::Subject.all page: 2
+```
+
+Fulltext search subjects:
+
+```ruby
+response = Fakturoid::Client::Subject.search 'Client name'
+```
+
+To find one subject use:
+
+```ruby
+response = Fakturoid::Client::Subject.find subject_id
+```
+
+You can create new subject with:
+
+```ruby
+response = Fakturoid::Client::Subject.create name: 'New client'
+```
+
+To update subject use following code:
+
+```ruby
+response = Fakturoid::Client::Subject.update subject_id, name: 'Updated client'
+```
+
+Delete subject:
+
+```ruby
+Fakturoid::Client::Subject.delete subject_id
+```
+
+For the list of all subject fields and options see the [Subjects API documentation](http://docs.fakturoid.apiary.io/#subjects)
+
+### Invoices resource
+
+To get all invoices run (Invoices are paginated by 20 per page):
+
+```ruby
+response = Fakturoid::Client::Invoice.all page: 2
+```
+
+Fulltext search invoices:
+
+```ruby
+response = Fakturoid::Client::Invoice.search 'Client name'
+```
+
+To find one invoice use:
+
+```ruby
+response = Fakturoid::Client::Invoice.find invoice_id
+```
+
+To download invoice in PDF format you can use following code:
+
+```
+response = Fakturoid::Client::Invoice.download_pdf invoice_id
+
+File.open '/path/to/file.pdf', 'w' do |f|
+  f.write response.body
+end
+```
+
+You can create new invoice with:
+
+```ruby
+invoice = {
+  subject_id: 123, 
+  lines: [
+    { 
+      quantity: 5, 
+      unit_name: 'kg', 
+      name: 'Sand',
+      unit_price: '100',
+      vat_rate: 21
+    }
+  ]
+}
+response = Fakturoid::Client::Invoice.create invoice
+```
+
+Invoice actions (eg. pay invoice):
+
+```ruby
+response = Fakturoid::Client::Invoice.fire invoice_id, 'pay'
+```
+
+To update invoice use following code:
+
+```ruby
+response = Fakturoid::Client::Invoice.update invoice_id, number: '2015-0015'
+```
+
+Delete invoice:
+
+```ruby
+response = Fakturoid::Client::Invoice.delete invoice_id
+```
+
+For the list of all invoice fields and options see the [Invoices API documentation](http://docs.fakturoid.apiary.io/#invoices)
+
+## Handling error responses
+
+The Fakturoid gem raises exceptions if error response is returned from the servers. All exceptions contains following attributes:
+
+  - `message` - Error description
+  - `response_code` - http code of error (only number)
+  - `response_body` - response body parsed in the hash
+
+<table>
+  <thead>
+    <tr>
+      <th>Error class</th><th>Response code</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>ContentTypeError</td><td>415 Unsupported Media Type</td><td>Wrong content type</td>
+    </tr>
+    <tr>
+      <td>UserAgentError</td><td>400 Bad Request</td><td>Missing `user_agent` congiguration</td>
+    </tr>
+    <tr>
+      <td>AuthenticationError</td><td>401 Unauthorized</td><td>Wrong authentication `email` or `api_key` configuration</td>
+    </tr>
+    <tr>
+      <td>BlockedAccountError</td><td>402 Payment Required</td><td>Fakturoid account is blocked</td>
+    </tr>
+    <tr>
+      <td>RateLimitError</td><td>429 Too Many Requests</td><td>Too many request sent during last 5 minutes</td>
+    </tr>
+    <tr>
+      <td>RecordNotFoundError</td><td>404 Not Found</td><td>Document with given ID does not exists or current account has read only permission and trying to edit something</td>
+    </tr>
+    <tr>
+      <td>InvalidRecordError</td><td>422 Unprocessable Entity</td><td>Invalid data sent to server</td>
+    </tr>
+    <tr>
+      <td>DestroySubjectError</td><td>403 Forbidden</td><td>Subject has invoices or expenses and cannot be deleted</td>
+    </tr>
+    <tr>
+      <td>SubjectLimitError</td><td>403 Forbidden</td><td>Subject quota reached for adding more subjects upgrade to higher plan</td>
+    </tr>
+  </tbody>
+</table>

@@ -8,8 +8,8 @@ Gem::Specification.new do |s|
   s.version       = Fakturoid::VERSION
   s.authors       = ["Eda Riedl"]
   s.email         = ["eda@fakturoid.cz"]
-  s.summary       = %q{Write a short summary. Required.}
-  s.description   = %q{Write a longer description. Optional.}
+  s.summary       = %q{Ruby client for web based invoicing service www.fakturoid.cz}
+  s.description   = %q{Ruby client for web based invoicing service www.fakturoid.cz}
   s.homepage      = "https://github.com/fakturoid/fakturoid-ruby"
   s.license       = "MIT"
 
@@ -21,8 +21,8 @@ Gem::Specification.new do |s|
   s.add_dependency 'multi_json'
   s.add_dependency 'faraday'
   
-  s.add_development_dependency "bundler", "~> 1.7"
-  s.add_development_dependency "rake", "~> 10.0"
+  s.add_development_dependency "bundler", "> 1"
+  s.add_development_dependency "rake"
   s.add_development_dependency "minitest"
   s.add_development_dependency "shoulda-context"
   s.add_development_dependency "mocha"
