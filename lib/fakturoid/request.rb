@@ -22,7 +22,7 @@ module Fakturoid
         req.url path, request_params
         req.body = MultiJson.dump(params[:payload]) if params.key?(:payload)
       end
-      Response.new(response, caller)
+      Response.new(response, caller, method)
     end
   end
 end
