@@ -3,6 +3,8 @@
 The Fakturoid gem is ruby library for API communication with web based invoicing service [www.fakturoid.cz](https://fakturoid.cz).
 Fakturoid [API documentation](http://docs.fakturoid.apiary.io). 
 
+[![Circle CI](https://circleci.com/gh/fakturoid/fakturoid-ruby.svg?style=svg)](https://circleci.com/gh/fakturoid/fakturoid-ruby)
+
 ## Installation
 
 Add this line to your application's Gemfile:
