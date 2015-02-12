@@ -1,7 +1,7 @@
 # Fakturoid
 
 The Fakturoid gem is ruby library for API communication with web based invoicing service [www.fakturoid.cz](https://fakturoid.cz).
-Fakturoid [API documentation](http://docs.fakturoid.apiary.io) can be found on apiary. 
+Fakturoid [API documentation](http://docs.fakturoid.apiary.io). 
 
 ## Installation
 
@@ -16,7 +16,7 @@ And then run:
     $ bundle
 
 Gem is not officially released and is under construction. So if you want to use it please install it from this repository
-and fix current commit with `:ref` option. API of the Fakturoid gem can be still changed.
+and specify `:ref` option. API of the Fakturoid gem can be still changed.
 
 ## Configuration
 
@@ -52,7 +52,7 @@ response.name # alternative way of getting the name of your company
 
 For the list of all returned account fields see the [Account API documentation](http://docs.fakturoid.apiary.io/#account)
 
-### Users resource
+### User resource
 
 For the information about current user use following code:
 
@@ -74,7 +74,7 @@ response = Fakturoid::Client::User.find(user_id)
 
 For the list of all returned user fields see the [Users API documentation](http://docs.fakturoid.apiary.io/#users)
 
-### Subjects resource
+### Subject resource
 
 To get all subjects run (Subjects are paginated by 20 per page):
 
@@ -114,7 +114,7 @@ Fakturoid::Client::Subject.delete subject_id
 
 For the list of all subject fields and options see the [Subjects API documentation](http://docs.fakturoid.apiary.io/#subjects)
 
-### Invoices resource
+### Invoice resource
 
 To get all invoices run (Invoices are paginated by 20 per page):
 
@@ -201,7 +201,7 @@ The Fakturoid gem raises exceptions if error response is returned from the serve
       <td>ContentTypeError</td><td>415 Unsupported Media Type</td><td>Wrong content type</td>
     </tr>
     <tr>
-      <td>UserAgentError</td><td>400 Bad Request</td><td>Missing `user_agent` congiguration</td>
+      <td>UserAgentError</td><td>400 Bad Request</td><td>Missing `user_agent` configuration</td>
     </tr>
     <tr>
       <td>AuthenticationError</td><td>401 Unauthorized</td><td>Wrong authentication `email` or `api_key` configuration</td>
