@@ -28,7 +28,7 @@ Fakturoid gem is configured within config block placed in `config/initializers/f
 Fakturoid.configure do |config|
   config.email = 'yourfakturoid@email.com'
   config.api_key = 'fasdff823fdasWRFKW843ladfjklasdf834'
-  config.account = 'applecorp'
+  config.account = 'applecorp' # former subdomain (first part of URL)
   config.user_agent = 'Name of your app (your@email.com)'
 end
 ```
