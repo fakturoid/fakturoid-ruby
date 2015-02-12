@@ -22,6 +22,6 @@ class ConfigTest < Minitest::Test
       config.account = 'testaccount'
     end
 
-    assert_equal 'testaccount (test@email.cz)', config.user_agent
+    assert_equal 'Fakturoid ruby gem (test@email.cz)', config.user_agent
   end
 end
