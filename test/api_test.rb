@@ -8,10 +8,10 @@ class ApiTest < Minitest::Test
   end
   
   should "raise argument error if id is in wrong format" do
-    assert_raises(ArgumentError) { Fakturoid::Api.validate_id(nil) }
-    assert_raises(ArgumentError) { Fakturoid::Api.validate_id("nil") }
-    assert Fakturoid::Api.validate_id(15)
-    assert Fakturoid::Api.validate_id("15")
+    assert_raises(ArgumentError) { Fakturoid::Api.validate_numerical_id(nil) }
+    assert_raises(ArgumentError) { Fakturoid::Api.validate_numerical_id("nil") }
+    assert Fakturoid::Api.validate_numerical_id(15)
+    assert Fakturoid::Api.validate_numerical_id("15")
   end
   
   should "raise argument error if search query is not given" do

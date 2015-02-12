@@ -6,7 +6,7 @@ module Fakturoid
       end
       
       def self.find(id)
-        validate_id(id)
+        validate_numerical_id(id)
         get_request("users/#{id}.json")
       end
       

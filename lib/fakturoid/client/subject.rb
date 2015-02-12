@@ -8,7 +8,7 @@ module Fakturoid
       end
       
       def self.find(id)
-        validate_id(id)
+        validate_numerical_id(id)
         get_request("subjects/#{id}.json")
       end
       
@@ -22,12 +22,12 @@ module Fakturoid
       end
       
       def self.update(id, payload = {})
-        validate_id(id)
+        validate_numerical_id(id)
         patch_request("subjects/#{id}.json", payload: payload)
       end
       
       def self.delete(id)
-        validate_id(id)
+        validate_numerical_id(id)
         delete_request("subjects/#{id}.json")
       end
     end

@@ -20,7 +20,7 @@ module Fakturoid
       end
       
       def self.find(id)
-        validate_id(id)
+        validate_numerical_id(id)
         get_request("invoices/#{id}.json")
       end
       
@@ -30,12 +30,12 @@ module Fakturoid
       end
       
       def self.download_pdf(id)
-        validate_id(id)
+        validate_numerical_id(id)
         get_request("invoices/#{id}/download.pdf", headers: { content_type: 'application/pdf' })
       end
       
       def self.fire(id, event)
-        validate_id(id)
+        validate_numerical_id(id)
         post_request("invoices/#{id}/fire.json", request_params: { event: event })
       end
       
@@ -44,12 +44,12 @@ module Fakturoid
       end
       
       def self.update(id, payload = {})
-        validate_id(id)
+        validate_numerical_id(id)
         patch_request("invoices/#{id}.json", payload: payload)
       end
       
       def self.delete(id)
-        validate_id(id)
+        validate_numerical_id(id)
         delete_request("invoices/#{id}.json")
       end
     end
