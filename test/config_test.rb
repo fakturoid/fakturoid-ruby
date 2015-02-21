@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class ConfigTest < Minitest::Test
+class Fakturoid::ConfigTest < Fakturoid::TestCase
   should "configure with block param" do
     config = Fakturoid::Config.new do |config|
       config.email   = 'test@email.cz'
@@ -23,5 +23,16 @@ class ConfigTest < Minitest::Test
     end
 
     assert_equal 'Fakturoid ruby gem (test@email.cz)', config.user_agent
+  end
+  
+  should "return correct endpoints" do
+    config = Fakturoid::Config.new do |config|
+      config.email   = 'test@email.cz'
+      config.api_key = 'XXXXXXXXXXX'
+      config.account = 'testaccount'
+    end
+    
+    assert_equal 'https://app.fakturoid.cz/api/v2/accounts/testaccount', config.endpoint
+    assert_equal 'https://app.fakturoid.cz/api/v2', config.endpoint_without_account
   end
 end

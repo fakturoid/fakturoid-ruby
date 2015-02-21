@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class ApiTest < Minitest::Test
+class Fakturoid::ApiTest < Fakturoid::TestCase
   should "permit only required arguments" do
     hash = { page: 4, number: '2015-0015', account: 15 }
     permitted_params = Fakturoid::Api.permit_params(hash, :page, :number, :status)
