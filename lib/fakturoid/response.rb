@@ -8,14 +8,14 @@ module Fakturoid
       @env = faraday_response.env
       @request_method = request_method.to_sym
       
-      if !(env.body.nil? || env.body.empty? || env.body =~ /\A\s+\z/)
+      if !(env.body.nil? || env.body.empty? || (json? && env.body =~ /\A\s+\z/))
         @body = json? ? MultiJson.load(env.body) : env.body
       end
       handle_response
     end
     
     def method_missing(method, *args, &block)
-      if body && body.key?(method.to_s)
+      if body && body.is_a?(Hash) && body.key?(method.to_s)
         body[method.to_s]
       else
         super
