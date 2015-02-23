@@ -26,7 +26,7 @@ module Fakturoid
       
       def self.search(query)
         validate_search_query(query)
-        get_request("invoices/search.json", request_params: { query: query })
+        get_request('invoices/search.json', request_params: { query: query })
       end
       
       def self.download_pdf(id)
@@ -45,7 +45,7 @@ module Fakturoid
       end
       
       def self.create(payload = {})
-        post_request("invoices.json", payload: payload)
+        post_request('invoices.json', payload: payload)
       end
       
       def self.update(id, payload = {})

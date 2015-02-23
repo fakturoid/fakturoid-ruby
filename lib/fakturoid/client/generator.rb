@@ -25,7 +25,7 @@ module Fakturoid
       end
       
       def self.create(payload = {})
-        post_request("generators.json", payload: payload)
+        post_request('generators.json', payload: payload)
       end
       
       def self.update(id, payload = {})

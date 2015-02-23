@@ -11,7 +11,7 @@ module Fakturoid
       end
       
       def self.all
-        get_request("users.json")
+        get_request('users.json')
       end
     end
   end

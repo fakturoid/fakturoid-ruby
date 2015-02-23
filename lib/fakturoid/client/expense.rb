@@ -14,7 +14,7 @@ module Fakturoid
       
       def self.search(query)
         validate_search_query(query)
-        get_request("expenses/search.json", request_params: { query: query })
+        get_request('expenses/search.json', request_params: { query: query })
       end
       
       def self.fire(id, event)
@@ -23,7 +23,7 @@ module Fakturoid
       end
       
       def self.create(payload = {})
-        post_request("expenses.json", payload: payload)
+        post_request('expenses.json', payload: payload)
       end
       
       def self.update(id, payload = {})

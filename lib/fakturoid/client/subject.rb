@@ -14,11 +14,11 @@ module Fakturoid
       
       def self.search(query)
         validate_search_query(query)
-        get_request("subjects/search.json", request_params: { query: query })
+        get_request('subjects/search.json', request_params: { query: query })
       end
       
       def self.create(payload = {})
-        post_request("subjects.json", payload: payload)
+        post_request('subjects.json', payload: payload)
       end
       
       def self.update(id, payload = {})
