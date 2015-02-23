@@ -30,6 +30,10 @@ module Fakturoid
       env.request_headers['Content-Type'] == 'application/json'
     end
     
+    def headers
+      env.response_headers
+    end
+    
     def inspect
       "#<#{self.class.name}:#{object_id} @body=\"#{self.body}\" @status_code=\"#{status_code}\">"
     end
