@@ -10,15 +10,12 @@ Fakturoid [API documentation](http://docs.fakturoid.apiary.io).
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'fakturoid', git: 'https://github.com/fakturoid/fakturoid-ruby.git'
+gem 'fakturoid'
 ```
 
 And then run:
 
     $ bundle
-
-Gem is not officially released and is under construction. So if you want to use it please install it from this repository
-and specify `:ref` option. API of the Fakturoid gem can be still changed.
 
 ## Configuration
 
