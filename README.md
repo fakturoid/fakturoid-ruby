@@ -170,6 +170,20 @@ Invoice actions (eg. pay invoice):
 response = Fakturoid::Client::Invoice.fire invoice_id, 'pay'
 ```
 
+Send invoice with customized message (for more information see [the API Documentation](http://docs.fakturoid.apiary.io/#messages)):
+
+```
+message = {
+  email: 'testemail@testemail.cz',
+  email_copy: 'some@emailcopy.cz',
+  subject: 'I have an invoice for you',
+  message: "Hi,\n\nyou can find invoice no. #no# on the following page #link#\n\nHave a nice day"
+}
+
+response = Fakturoid::Client::Invoice.deliver_message(181, message)
+response.status_code # => 201
+```
+
 To update invoice use following code:
 
 ```ruby
