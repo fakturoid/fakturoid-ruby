@@ -28,6 +28,8 @@ module Fakturoid
   class AuthenticationError     < ApiError; end
   class BlockedAccountError     < ApiError; end
   class RateLimitError          < ApiError; end
+  class ReadOnlySiteError       < ApiError; end
+  class PaginationError         < ApiError; end
 
   class RecordNotFoundError     < ApiError; end
   class InvalidRecordError      < ApiError; end
@@ -35,6 +37,9 @@ module Fakturoid
   class SubjectLimitError       < ApiError; end
   class GeneratorLimitError     < ApiError; end
   class UnsupportedFeatureError < ApiError; end
+  
+  class ClientError < ApiError; end
+  class ServerError < ApiError; end
   
   def self.configure(&block)
     Fakturoid::Api.configure(&block)

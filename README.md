@@ -206,6 +206,9 @@ The Fakturoid gem raises exceptions if error response is returned from the serve
       <td>UserAgentError</td><td>400 Bad Request</td><td>Missing `user_agent` configuration</td>
     </tr>
     <tr>
+      <td>PaginationError</td><td>400 Bad Request</td><td>Page with given number does not exist</td>
+    </tr>
+    <tr>
       <td>AuthenticationError</td><td>401 Unauthorized</td><td>Wrong authentication `email` or `api_key` configuration</td>
     </tr>
     <tr>
@@ -213,6 +216,9 @@ The Fakturoid gem raises exceptions if error response is returned from the serve
     </tr>
     <tr>
       <td>RateLimitError</td><td>429 Too Many Requests</td><td>Too many request sent during last 5 minutes</td>
+    </tr>
+    <tr>
+      <td>ReadOnlySiteError</td><td>503 Service Unavailable</td><td>Fakturoid is read only</td>
     </tr>
     <tr>
       <td>RecordNotFoundError</td><td>404 Not Found</td><td>Document with given ID does not exists or current account has read only permission and trying to edit something</td>
@@ -231,6 +237,12 @@ The Fakturoid gem raises exceptions if error response is returned from the serve
     </tr>
     <tr>
       <td>UnsupportedFeatureError</td><td>403 Forbidden</td><td>Feature is not supported in your plan to use this feature upgrade to higher plan</td>
+    </tr>
+    <tr>
+      <td>ClientError</td><td>4XX</td><td>Server returns response code which is not specified above</td>
+    </tr>
+    <tr>
+      <td>ServerError</td><td>5XX</td><td>Server returns response code which is not specified above</td>
     </tr>
   </tbody>
 </table>
