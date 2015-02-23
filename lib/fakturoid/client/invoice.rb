@@ -39,6 +39,11 @@ module Fakturoid
         post_request("invoices/#{id}/fire.json", request_params: { event: event })
       end
       
+      def self.deliver_message(invoice_id, payload = {})
+        validate_numerical_id(invoice_id)
+        post_request("invoices/#{invoice_id}/message.json", payload: payload)
+      end
+      
       def self.create(payload = {})
         post_request("invoices.json", payload: payload)
       end
