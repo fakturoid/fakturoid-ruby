@@ -43,8 +43,10 @@ module Fakturoid
         when 401 then raise error(AuthenticationError, "Authentification failed")
         when 402 then raise error(BlockedAccountError, "Account is blocked")
         when 403 then 
-          raise error(DestroySubjectError, "Cannot destroy subject with invoices") if request_method == :delete
-          raise error(SubjectLimitError,   "Subject limit for account reached")    if request_method == :post
+          raise error(DestroySubjectError, "Cannot destroy subject with invoices")          if caller == Client::Subject && request_method == :delete
+          raise error(SubjectLimitError,   "Subject limit for account reached")             if caller == Client::Subject && request_method == :post
+          raise error(GeneratorLimitError, "Recurring generator limit for account reached") if caller == Client::Generator
+          raise error(UnsupportedFeatureError, "Feature unavailable for account plan")
         when 404 then raise error(RecordNotFoundError, "Record not found")
         when 415 then raise error(ContentTypeError,    "Unsupported Content-Type")
         when 422 then raise error(InvalidRecordError,  "Invalid record")

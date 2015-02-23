@@ -23,16 +23,18 @@ module Fakturoid
     end
   end
   
-  class ContentTypeError    < ApiError; end
-  class UserAgentError      < ApiError; end
-  class AuthenticationError < ApiError; end
-  class BlockedAccountError < ApiError; end
-  class RateLimitError      < ApiError; end
-  
-  class RecordNotFoundError < ApiError; end
-  class InvalidRecordError  < ApiError; end
-  class DestroySubjectError < ApiError; end
-  class SubjectLimitError   < ApiError; end
+  class ContentTypeError        < ApiError; end
+  class UserAgentError          < ApiError; end
+  class AuthenticationError     < ApiError; end
+  class BlockedAccountError     < ApiError; end
+  class RateLimitError          < ApiError; end
+
+  class RecordNotFoundError     < ApiError; end
+  class InvalidRecordError      < ApiError; end
+  class DestroySubjectError     < ApiError; end
+  class SubjectLimitError       < ApiError; end
+  class GeneratorLimitError     < ApiError; end
+  class UnsupportedFeatureError < ApiError; end
   
   def self.configure(&block)
     Fakturoid::Api.configure(&block)
