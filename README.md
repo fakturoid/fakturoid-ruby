@@ -172,7 +172,7 @@ response = Fakturoid::Client::Invoice.fire invoice_id, 'pay'
 
 Send invoice with customized message (for more information see [the API Documentation](http://docs.fakturoid.apiary.io/#messages)):
 
-```
+```ruby
 message = {
   email: 'testemail@testemail.cz',
   email_copy: 'some@emailcopy.cz',
