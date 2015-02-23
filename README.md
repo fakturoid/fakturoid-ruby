@@ -226,5 +226,11 @@ The Fakturoid gem raises exceptions if error response is returned from the serve
     <tr>
       <td>SubjectLimitError</td><td>403 Forbidden</td><td>Subject quota reached for adding more subjects upgrade to higher plan</td>
     </tr>
+    <tr>
+      <td>GeneratorLimitError</td><td>403 Forbidden</td><td>Generator quota reached for adding more recurring generators upgrade to higher plan</td>
+    </tr>
+    <tr>
+      <td>UnsupportedFeatureError</td><td>403 Forbidden</td><td>Feature is not supported in your plan to use this feature upgrade to higher plan</td>
+    </tr>
   </tbody>
 </table>
