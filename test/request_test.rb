@@ -7,7 +7,7 @@ class Fakturoid::RequestTest < Fakturoid::TestCase
       builder.adapter :test do |stub|
         stub.get('invoices/5/download.pdf') { |env| [ 200, {content_type: 'application/pdf'}, pdf ]}
       end
-      builder.headers = { content_type: 'applicatoin/pdf' }
+      builder.headers = { content_type: 'application/pdf' }
     end
     Fakturoid::Request.any_instance.stubs(:connection).returns(test_connection)
     
