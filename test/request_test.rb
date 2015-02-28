@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class Fakturoid::RequestTest < Fakturoid::TestCase
-  should "should return pdf" do
+  should 'should return pdf' do
     pdf = load_fixture('invoice.pdf')
     test_connection = Faraday.new do |builder|
       builder.adapter :test do |stub|

@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class Fakturoid::ConfigTest < Fakturoid::TestCase
-  should "configure with block param" do
+  should 'configure with block param' do
     config = Fakturoid::Config.new do |config|
       config.email   = 'test@email.cz'
       config.api_key = 'XXXXXXXXXXX'
@@ -15,7 +15,7 @@ class Fakturoid::ConfigTest < Fakturoid::TestCase
     assert_equal 'My test app (test@email.cz)', config.user_agent
   end
   
-  should "use default user agent" do
+  should 'use default user agent' do
     config = Fakturoid::Config.new do |config|
       config.email   = 'test@email.cz'
       config.api_key = 'XXXXXXXXXXX'
@@ -25,7 +25,7 @@ class Fakturoid::ConfigTest < Fakturoid::TestCase
     assert_equal 'Fakturoid ruby gem (test@email.cz)', config.user_agent
   end
   
-  should "return correct endpoints" do
+  should 'return correct endpoints' do
     config = Fakturoid::Config.new do |config|
       config.email   = 'test@email.cz'
       config.api_key = 'XXXXXXXXXXX'

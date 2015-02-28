@@ -1,0 +1,8 @@
+{
+    "status": "Account blocked",
+    "overdue_invoices": [
+        {
+            "invoice_url": "http://app.fakturoid.dev/robot/p/3WfeLRO5HZ/2015-0002"
+        }
+    ]
+}
