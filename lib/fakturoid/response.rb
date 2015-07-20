@@ -14,14 +14,6 @@ module Fakturoid
       handle_response
     end
     
-    def method_missing(method, *args, &block)
-      if body && body.is_a?(Hash) && body.key?(method.to_s)
-        body[method.to_s]
-      else
-        super
-      end
-    end
-    
     def status_code
       env['status']
     end
@@ -65,6 +57,22 @@ module Fakturoid
     
     def error(klass, message = nil)
       klass.new message, status_code, body
+    end
+    
+    def method_missing(method, *args, &block)
+      if body_has_key?(method)
+        body[method.to_s]
+      else
+        super
+      end
+    end
+    
+    def respond_to_missing?(method, _include_all)
+       body_has_key?(method) || super
+    end
+    
+    def body_has_key?(key)
+      body && body.is_a?(Hash) && body.key?(key.to_s)
     end
   end
 end

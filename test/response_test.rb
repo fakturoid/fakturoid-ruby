@@ -15,6 +15,8 @@ class Fakturoid::ResponseTest < Fakturoid::TestCase
     assert_equal 200, response.status_code 
     assert_equal 5,   response.id
     assert_equal 5,   response.body['id']
+    assert response.respond_to?(:body)
+    assert response.respond_to?(:id)
     assert_raises(NoMethodError) { response.name }
   end
   
