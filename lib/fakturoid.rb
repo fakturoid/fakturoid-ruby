@@ -12,7 +12,6 @@ require 'fakturoid/version'
 require 'fakturoid/railtie' if defined?(::Rails)
 
 module Fakturoid
-  
   class ApiError < StandardError
     attr_accessor :response_code, :response_body
     

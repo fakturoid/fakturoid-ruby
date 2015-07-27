@@ -5,7 +5,7 @@ class Fakturoid::ResponseTest < Fakturoid::TestCase
     json = load_fixture('invoice.json')
     test_connection = Faraday.new do |builder|
       builder.adapter :test do |stub|
-        stub.get('invoices/5.json') { |env| [ 200, { content_type: 'application/json' }, json ]}
+        stub.get('invoices/5.json') { |_env| [200, { content_type: 'application/json' }, json] }
       end
       builder.headers = { content_type: 'application/json', user_agent: 'Fakturoid gem (email@testmail.cz)' }
     end
@@ -24,7 +24,7 @@ class Fakturoid::ResponseTest < Fakturoid::TestCase
     should 'raise user agent error' do
       test_connection = Faraday.new do |builder|
         builder.adapter :test do |stub|
-          stub.get('invoices/5.json') { |env| [ 400, { content_type: 'application/json' }, ' ' ]}
+          stub.get('invoices/5.json') { |_env| [400, { content_type: 'application/json' }, ' '] }
         end
         builder.headers = { content_type: 'application/json', user_agent: '' }
       end
@@ -35,7 +35,7 @@ class Fakturoid::ResponseTest < Fakturoid::TestCase
     should 'raise pagination error' do
       test_connection = Faraday.new do |builder|
         builder.adapter :test do |stub|
-          stub.get('invoices.json?page=4') { |env| [ 400, { content_type: 'application/json' }, ' ' ]}
+          stub.get('invoices.json?page=4') { |_env| [400, { content_type: 'application/json' }, ' '] }
         end
         builder.headers = { content_type: 'application/json', user_agent: 'Fakturoid gem (email@testmail.cz)' }
       end
@@ -46,7 +46,7 @@ class Fakturoid::ResponseTest < Fakturoid::TestCase
     should 'raise authentication error' do
       test_connection = Faraday.new do |builder|
         builder.adapter :test do |stub|
-          stub.get('invoices.json?page=4') { |env| [ 401, { content_type: 'application/json' }, ' ' ]}
+          stub.get('invoices.json?page=4') { |_env| [401, { content_type: 'application/json' }, ' '] }
         end
         builder.headers = { content_type: 'application/json', user_agent: 'Fakturoid gem (email@testmail.cz)' }
       end
@@ -58,7 +58,7 @@ class Fakturoid::ResponseTest < Fakturoid::TestCase
       json = load_fixture('blocked_account.json')
       test_connection = Faraday.new do |builder|
         builder.adapter :test do |stub|
-          stub.get('account.json') { |env| [ 402, { content_type: 'application/json' }, json ]}
+          stub.get('account.json') { |_env| [402, { content_type: 'application/json' }, json] }
         end
         builder.headers = { content_type: 'application/json', user_agent: 'Fakturoid gem (email@testmail.cz)' }
       end
@@ -78,7 +78,7 @@ class Fakturoid::ResponseTest < Fakturoid::TestCase
     should 'raise destroy subject error' do
       test_connection = Faraday.new do |builder|
         builder.adapter :test do |stub|
-          stub.delete('subjects/5.json') { |env| [ 403, { content_type: 'application/json' }, ' ' ]}
+          stub.delete('subjects/5.json') { |_env| [403, { content_type: 'application/json' }, ' '] }
         end
         builder.headers = { content_type: 'application/json', user_agent: 'Fakturoid gem (email@testmail.cz)' }
       end
@@ -89,40 +89,40 @@ class Fakturoid::ResponseTest < Fakturoid::TestCase
     should 'raise subject limit error' do
       test_connection = Faraday.new do |builder|
         builder.adapter :test do |stub|
-          stub.post('subjects.json') { |env| [ 403, { content_type: 'application/json' }, ' ' ]}
+          stub.post('subjects.json') { |_env| [403, { content_type: 'application/json' }, ' '] }
         end
         builder.headers = { content_type: 'application/json', user_agent: 'Fakturoid gem (email@testmail.cz)' }
       end
       
-      assert_raises(Fakturoid::SubjectLimitError) { Fakturoid::Response.new(test_connection.post('subjects.json', { name: 'Customer s.r.o.' }), Fakturoid::Client::Subject, :post) }
+      assert_raises(Fakturoid::SubjectLimitError) { Fakturoid::Response.new(test_connection.post('subjects.json', name: 'Customer s.r.o.'), Fakturoid::Client::Subject, :post) }
     end
     
     should 'raise generator limit error' do
       test_connection = Faraday.new do |builder|
         builder.adapter :test do |stub|
-          stub.post('generators.json') { |env| [ 403, { content_type: 'application/json' }, ' ' ]}
+          stub.post('generators.json') { |_env| [403, { content_type: 'application/json' }, ' '] }
         end
         builder.headers = { content_type: 'application/json', user_agent: 'Fakturoid gem (email@testmail.cz)' }
       end
       
-      assert_raises(Fakturoid::GeneratorLimitError) { Fakturoid::Response.new(test_connection.post('generators.json', { name: 'Customer s.r.o.', recurring: true }), Fakturoid::Client::Generator, :post) }
+      assert_raises(Fakturoid::GeneratorLimitError) { Fakturoid::Response.new(test_connection.post('generators.json', name: 'Customer s.r.o.', recurring: true), Fakturoid::Client::Generator, :post) }
     end
     
     should 'raise unsupported feature error' do
       test_connection = Faraday.new do |builder|
         builder.adapter :test do |stub|
-          stub.post('invoices/5/message.json') { |env| [ 403, { content_type: 'application/json' }, ' ' ]}
+          stub.post('invoices/5/message.json') { |_env| [403, { content_type: 'application/json' }, ' '] }
         end
         builder.headers = { content_type: 'application/json', user_agent: 'Fakturoid gem (email@testmail.cz)' }
       end
       
-      assert_raises(Fakturoid::UnsupportedFeatureError) { Fakturoid::Response.new(test_connection.post('invoices/5/message.json', { email: 'customer@email.cz' }), Fakturoid::Client::Invoice, :post) }
+      assert_raises(Fakturoid::UnsupportedFeatureError) { Fakturoid::Response.new(test_connection.post('invoices/5/message.json', email: 'customer@email.cz'), Fakturoid::Client::Invoice, :post) }
     end
     
     should 'raise record not found error' do
       test_connection = Faraday.new do |builder|
         builder.adapter :test do |stub|
-          stub.get('invoices/10.json') { |env| [ 404, { content_type: 'application/json' }, ' ' ]}
+          stub.get('invoices/10.json') { |_env| [404, { content_type: 'application/json' }, ' '] }
         end
         builder.headers = { content_type: 'application/json', user_agent: 'Fakturoid gem (email@testmail.cz)' }
       end
@@ -133,7 +133,7 @@ class Fakturoid::ResponseTest < Fakturoid::TestCase
     should 'raise content type error' do
       test_connection = Faraday.new do |builder|
         builder.adapter :test do |stub|
-          stub.get('invoices/5.xml') { |env| [ 415, { content_type: 'application/xml' }, ' ' ]}
+          stub.get('invoices/5.xml') { |_env| [415, { content_type: 'application/xml' }, ' '] }
         end
         builder.headers = { content_type: 'application/xml', user_agent: 'Fakturoid gem (email@testmail.cz)' }
       end
@@ -145,7 +145,7 @@ class Fakturoid::ResponseTest < Fakturoid::TestCase
       json = load_fixture('invoice_error.json')
       test_connection = Faraday.new do |builder|
         builder.adapter :test do |stub|
-          stub.patch('invoice/5.json') { |env| [ 422, { content_type: 'application/json' }, json ]}
+          stub.patch('invoice/5.json') { |_env| [422, { content_type: 'application/json' }, json] }
         end
         builder.headers = { content_type: 'application/json', user_agent: 'Fakturoid gem (email@testmail.cz)' }
       end
@@ -165,7 +165,7 @@ class Fakturoid::ResponseTest < Fakturoid::TestCase
     should 'raise rate limit error' do
       test_connection = Faraday.new do |builder|
         builder.adapter :test do |stub|
-          stub.get('invoices/5.json') { |env| [ 429, { content_type: 'application/json' }, ' ' ]}
+          stub.get('invoices/5.json') { |_env| [429, { content_type: 'application/json' }, ' '] }
         end
         builder.headers = { content_type: 'application/json', user_agent: 'Fakturoid gem (email@testmail.cz)' }
       end
@@ -176,7 +176,7 @@ class Fakturoid::ResponseTest < Fakturoid::TestCase
     should 'raise read only site error' do
       test_connection = Faraday.new do |builder|
         builder.adapter :test do |stub|
-          stub.delete('invoices/5.json') { |env| [ 503, { content_type: 'application/json' }, ' ' ]}
+          stub.delete('invoices/5.json') { |_env| [503, { content_type: 'application/json' }, ' '] }
         end
         builder.headers = { content_type: 'application/json', user_agent: 'Fakturoid gem (email@testmail.cz)' }
       end

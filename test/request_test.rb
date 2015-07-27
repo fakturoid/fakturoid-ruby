@@ -5,7 +5,7 @@ class Fakturoid::RequestTest < Fakturoid::TestCase
     pdf = load_fixture('invoice.pdf')
     test_connection = Faraday.new do |builder|
       builder.adapter :test do |stub|
-        stub.get('invoices/5/download.pdf') { |env| [ 200, {content_type: 'application/pdf'}, pdf ]}
+        stub.get('invoices/5/download.pdf') { |_env| [200, { content_type: 'application/pdf' }, pdf] }
       end
       builder.headers = { content_type: 'application/pdf' }
     end

@@ -5,7 +5,7 @@ module Fakturoid
     
     ENDPOINT = 'https://app.fakturoid.cz/api/v2'
     
-    def initialize(&block)
+    def initialize(&_block)
       yield self
     end
     

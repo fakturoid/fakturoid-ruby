@@ -12,9 +12,8 @@ module Fakturoid
     end
     
     def call(params = {})
-      unless HTTP_METHODS.include?(method.to_sym)
-        raise ArgumentError, "Unknown http method: #{method}"
-      end
+      raise ArgumentError, "Unknown http method: #{method}" unless HTTP_METHODS.include?(method.to_sym)
+      
       request_params = params[:request_params] || {}
       
       http_connection = connection(params)

@@ -27,7 +27,7 @@ module Fakturoid
     end
     
     def inspect
-      "#<#{self.class.name}:#{object_id} @body=\"#{self.body}\" @status_code=\"#{status_code}\">"
+      "#<#{self.class.name}:#{object_id} @body=\"#{body}\" @status_code=\"#{status_code}\">"
     end
   
   private
@@ -68,7 +68,7 @@ module Fakturoid
     end
     
     def respond_to_missing?(method, _include_all)
-       body_has_key?(method) || super
+      body_has_key?(method) || super
     end
     
     def body_has_key?(key)
