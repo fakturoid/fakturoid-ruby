@@ -4,3 +4,4 @@ coverage/
 doc/
 pkg/
 .DS_Store
+rubocop.html

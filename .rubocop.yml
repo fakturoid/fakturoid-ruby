@@ -1,0 +1,35 @@
+Metrics/LineLength:
+  Enabled: false
+
+Metrics/ClassLength:
+  Exclude:
+    - 'test/**/*'
+
+Style/AccessModifierIndentation:
+  EnforcedStyle: outdent
+
+Style/CaseIndentation:
+  IndentOneStep: true
+
+Style/SignalException:
+  EnforcedStyle: only_raise
+
+Style/TrailingWhitespace:
+  Enabled: false
+
+Style/ClassAndModuleChildren:
+  Exclude:
+    - 'test/**/*'
+
+Style/SpaceAroundOperators:
+  MultiSpaceAllowedForOperators:
+    - '<'
+    - '='
+
+Documentation:
+  Enabled: false
+
+AllCops:
+  Exclude:
+    - 'Rakefile'
+    - 'fakturoid.gemspec'
