@@ -2,7 +2,7 @@ module Fakturoid
   module Client
     class Subject < Fakturoid::Api
       def self.all(params = {})
-        request_params = permit_params(params, :page, :since, :custom_id) || {}
+        request_params = permit_params(params, :page, :since, :updated_since, :custom_id) || {}
         
         get_request('subjects.json', request_params: request_params)
       end

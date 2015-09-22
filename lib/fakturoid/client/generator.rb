@@ -2,19 +2,19 @@ module Fakturoid
   module Client
     class Generator < Fakturoid::Api
       def self.all(params = {})
-        request_params = permit_params(params, :page, :since, :subject_id) || {}
+        request_params = permit_params(params, :page, :since, :updated_since, :subject_id) || {}
         
         get_request('generators.json', request_params: request_params)
       end
       
       def self.recurring(params = {})
-        request_params = permit_params(params, :page, :since, :subject_id) || {}
+        request_params = permit_params(params, :page, :since, :updated_since, :subject_id) || {}
         
         get_request('generators/recurring.json', request_params: request_params)
       end
       
       def self.template(params = {})
-        request_params = permit_params(params, :page, :since, :subject_id) || {}
+        request_params = permit_params(params, :page, :since, :updated_since, :subject_id) || {}
         
         get_request('generators/template.json', request_params: request_params)
       end
