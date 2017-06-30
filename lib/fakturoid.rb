@@ -14,14 +14,14 @@ require 'fakturoid/railtie' if defined?(::Rails)
 module Fakturoid
   class ApiError < StandardError
     attr_accessor :response_code, :response_body
-    
+
     def initialize(message = nil, response_code = nil, response_body = nil)
       super(message)
       self.response_code = response_code
       self.response_body = response_body
     end
   end
-  
+
   class ContentTypeError        < ApiError; end
   class UserAgentError          < ApiError; end
   class AuthenticationError     < ApiError; end
@@ -36,10 +36,10 @@ module Fakturoid
   class SubjectLimitError       < ApiError; end
   class GeneratorLimitError     < ApiError; end
   class UnsupportedFeatureError < ApiError; end
-  
+
   class ClientError < ApiError; end
   class ServerError < ApiError; end
-  
+
   def self.configure(&block)
     Fakturoid::Api.configure(&block)
   end

@@ -1,7 +1,7 @@
 # Fakturoid
 
 The Fakturoid gem is ruby library for API communication with web based invoicing service [www.fakturoid.cz](https://fakturoid.cz).
-Fakturoid [API documentation](http://docs.fakturoid.apiary.io). 
+Fakturoid [API documentation](http://docs.fakturoid.apiary.io).
 
 [![Gem Version](https://badge.fury.io/rb/fakturoid.svg)](http://badge.fury.io/rb/fakturoid)
 [![Circle CI](https://circleci.com/gh/fakturoid/fakturoid-ruby.svg?style=svg)](https://circleci.com/gh/fakturoid/fakturoid-ruby)
@@ -148,11 +148,11 @@ You can create new invoice with:
 
 ```ruby
 invoice = {
-  subject_id: 123, 
+  subject_id: 123,
   lines: [
-    { 
-      quantity: 5, 
-      unit_name: 'kg', 
+    {
+      quantity: 5,
+      unit_name: 'kg',
       name: 'Sand',
       unit_price: '100',
       vat_rate: 21

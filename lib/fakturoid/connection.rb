@@ -1,6 +1,6 @@
 module Fakturoid
   module Connection
-    
+
     def default_options(options = {})
       content_type = options[:headers] && options[:headers][:content_type]
       {
@@ -11,11 +11,11 @@ module Fakturoid
         url: options[:url] || Fakturoid::Api.config.endpoint
       }
     end
-    
+
     def connection(options = {})
       @connection = Faraday.new default_options(options)
       @connection.basic_auth(Fakturoid::Api.config.email, Fakturoid::Api.config.api_key)
-      
+
       @connection
     end
   end

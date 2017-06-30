@@ -10,7 +10,7 @@ class Fakturoid::RequestTest < Fakturoid::TestCase
       builder.headers = { content_type: 'application/pdf' }
     end
     Fakturoid::Request.any_instance.stubs(:connection).returns(test_connection)
-    
+
     response = Fakturoid::Request.new(:get, 'invoices/5/download.pdf', Fakturoid::Client::Invoice).call
     assert !response.json?
     assert_raises(NoMethodError) { response.name }

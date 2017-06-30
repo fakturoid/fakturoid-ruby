@@ -8,7 +8,7 @@
   invoice = Fakturoid::Client::Invoice.find(1234)
   invoice.respond_to?(:number)
   # => false
-  
+
   ### After
   invoice = Fakturoid::Client::Invoice.find(1234)
   invoice.respond_to?(:number)
