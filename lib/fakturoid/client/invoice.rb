@@ -34,9 +34,12 @@ module Fakturoid
         get_request("invoices/#{id}/download.pdf", headers: { content_type: 'application/pdf' })
       end
 
-      def self.fire(id, event)
+      def self.fire(id, event, params = {})
+        request_params = permit_params(params, :paid_at) || {}
+        request_params[:event] = event
+
         validate_numerical_id(id)
-        post_request("invoices/#{id}/fire.json", request_params: { event: event })
+        post_request("invoices/#{id}/fire.json", request_params: request_params)
       end
 
       def self.deliver_message(invoice_id, payload = {})
