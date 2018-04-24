@@ -35,7 +35,7 @@ module Fakturoid
       end
 
       def self.fire(id, event, params = {})
-        request_params = permit_params(params, :paid_at) || {}
+        request_params = permit_params(params, :paid_at, :paid_amount) || {}
         request_params[:event] = event
 
         validate_numerical_id(id)
