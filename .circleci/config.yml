@@ -1,0 +1,15 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/ruby:2.4
+        environment:
+          TZ: /usr/share/zoneinfo/Europe/Prague
+    steps:
+      - checkout
+      - run:
+          name: Install gems
+          command: bundle install --path=vendor/bundle --jobs=4 --retry=3
+      - run:
+          name: Run tests
+          command: bundle exec rake test
