@@ -19,6 +19,7 @@ module Fakturoid
       http_connection = connection(params)
       response = http_connection.send(method) do |req|
         req.url path, request_params
+        req.headers['X-Client-Env'] = "Ruby #{RUBY_VERSION}"
         req.body = MultiJson.dump(params[:payload]) if params.key?(:payload)
       end
       Response.new(response, caller, method)
