@@ -79,31 +79,31 @@ For the list of all returned user fields see the [Users API documentation](http:
 To get all subjects run (Subjects are paginated by 20 per page):
 
 ```ruby
-response = Fakturoid::Client::Subject.all page: 2
+response = Fakturoid::Client::Subject.all(page: 2)
 ```
 
 Fulltext search subjects:
 
 ```ruby
-response = Fakturoid::Client::Subject.search 'Client name'
+response = Fakturoid::Client::Subject.search('Client name')
 ```
 
 To find one subject use:
 
 ```ruby
-response = Fakturoid::Client::Subject.find subject_id
+response = Fakturoid::Client::Subject.find(subject_id)
 ```
 
 You can create new subject with:
 
 ```ruby
-response = Fakturoid::Client::Subject.create name: 'New client'
+response = Fakturoid::Client::Subject.create(name: 'New client')
 ```
 
 To update subject use following code:
 
 ```ruby
-response = Fakturoid::Client::Subject.update subject_id, name: 'Updated client'
+response = Fakturoid::Client::Subject.update(subject_id, name: 'Updated client')
 ```
 
 Delete subject:
@@ -119,25 +119,25 @@ For the list of all subject fields and options see the [Subjects API documentati
 To get all invoices run (Invoices are paginated by 20 per page):
 
 ```ruby
-response = Fakturoid::Client::Invoice.all page: 2
+response = Fakturoid::Client::Invoice.all(page: 2)
 ```
 
 Fulltext search invoices:
 
 ```ruby
-response = Fakturoid::Client::Invoice.search 'Client name'
+response = Fakturoid::Client::Invoice.search('Client name')
 ```
 
 To find one invoice use:
 
 ```ruby
-response = Fakturoid::Client::Invoice.find invoice_id
+response = Fakturoid::Client::Invoice.find(invoice_id)
 ```
 
 To download invoice in PDF format you can use following code:
 
 ```ruby
-response = Fakturoid::Client::Invoice.download_pdf invoice_id
+response = Fakturoid::Client::Invoice.download_pdf(invoice_id)
 
 File.open '/path/to/file.pdf', 'w' do |f|
   f.write response.body
@@ -159,13 +159,13 @@ invoice = {
     }
   ]
 }
-response = Fakturoid::Client::Invoice.create invoice
+response = Fakturoid::Client::Invoice.create(invoice)
 ```
 
 Invoice actions (eg. pay invoice):
 
 ```ruby
-response = Fakturoid::Client::Invoice.fire invoice_id, 'pay'
+response = Fakturoid::Client::Invoice.fire(invoice_id, 'pay')
 ```
 
 Send invoice with customized message (for more information see [the API Documentation](http://docs.fakturoid.apiary.io/#messages)):
@@ -185,13 +185,13 @@ response.status_code # => 201
 To update invoice use following code:
 
 ```ruby
-response = Fakturoid::Client::Invoice.update invoice_id, number: '2015-0015'
+response = Fakturoid::Client::Invoice.update(invoice_id, number: '2015-0015')
 ```
 
 Delete invoice:
 
 ```ruby
-response = Fakturoid::Client::Invoice.delete invoice_id
+response = Fakturoid::Client::Invoice.delete(invoice_id)
 ```
 
 For the list of all invoice fields and options see the [Invoices API documentation](http://docs.fakturoid.apiary.io/#invoices)
