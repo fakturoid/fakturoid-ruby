@@ -17,9 +17,12 @@ module Fakturoid
         get_request('expenses/search.json', request_params: { query: query })
       end
 
-      def self.fire(id, event)
+      def self.fire(id, event, params = {})
+        request_params = permit_params(params, :paid_on, :paid_amount, :variable_symbol, :bank_account_id) || {}
+        request_params[:event] = event
+
         validate_numerical_id(id)
-        post_request("expenses/#{id}/fire.json", request_params: { event: event })
+        post_request("expenses/#{id}/fire.json", request_params: request_params)
       end
 
       def self.create(payload = {})
