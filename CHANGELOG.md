@@ -1,10 +1,14 @@
 ## master
 
-- Add support for `paid_on`, `paid_amount`, `variable_symbol` and `bank_account_id` params in expense `fire` method.
 - Add support for `variable_symbol` and `bank_account_id` param in invoice `fire` method.
 
   ```ruby
   Fakturoid::Client::Invoice.fire(1234, 'pay', paid_at: '2017-07-03', paid_amount: '100.23', variable_symbol: '12345678', bank_account_id: 123)
+  ```
+
+- Add support for `paid_on`, `paid_amount`, `variable_symbol` and `bank_account_id` params in expense `fire` method.
+
+  ```ruby
   Fakturoid::Client::Expense.fire(1234, 'pay', paid_on: '2017-07-03', paid_amount: '100.23', variable_symbol: '12345678', bank_account_id: 123)
   ```
 
