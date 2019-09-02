@@ -1,7 +1,7 @@
 # Fakturoid
 
 The Fakturoid gem is ruby library for API communication with web based invoicing service [www.fakturoid.cz](https://fakturoid.cz).
-Fakturoid [API documentation](http://docs.fakturoid.apiary.io).
+Fakturoid [API documentation](https://fakturoid.docs.apiary.io/).
 
 [![Gem Version](https://badge.fury.io/rb/fakturoid.svg)](http://badge.fury.io/rb/fakturoid)
 [![Circle CI](https://circleci.com/gh/fakturoid/fakturoid-ruby.svg?style=svg)](https://circleci.com/gh/fakturoid/fakturoid-ruby)
@@ -50,7 +50,7 @@ response.body['name'] # return name of your company
 response.name # alternative way of getting the name of your company
 ```
 
-For the list of all returned account fields see the [Account API documentation](http://docs.fakturoid.apiary.io/#account)
+For the list of all returned account fields see the [Account API documentation](https://fakturoid.docs.apiary.io/#reference/account)
 
 ### User resource
 
@@ -72,7 +72,7 @@ If you want to get information about one user which belongs to account use:
 response = Fakturoid::Client::User.find(user_id)
 ```
 
-For the list of all returned user fields see the [Users API documentation](http://docs.fakturoid.apiary.io/#users)
+For the list of all returned user fields see the [Users API documentation](https://fakturoid.docs.apiary.io/#reference/users)
 
 ### Subject resource
 
@@ -112,7 +112,7 @@ Delete subject:
 Fakturoid::Client::Subject.delete subject_id
 ```
 
-For the list of all subject fields and options see the [Subjects API documentation](http://docs.fakturoid.apiary.io/#subjects)
+For the list of all subject fields and options see the [Subjects API documentation](https://fakturoid.docs.apiary.io/#reference/subjects)
 
 ### Invoice resource
 
@@ -168,7 +168,7 @@ Invoice actions (eg. pay invoice):
 response = Fakturoid::Client::Invoice.fire(invoice_id, 'pay')
 ```
 
-Send invoice with customized message (for more information see [the API Documentation](http://docs.fakturoid.apiary.io/#messages)):
+Send invoice with customized message (for more information see [the API Documentation](https://fakturoid.docs.apiary.io/#reference/messages)):
 
 ```ruby
 message = {
@@ -194,7 +194,7 @@ Delete invoice:
 response = Fakturoid::Client::Invoice.delete(invoice_id)
 ```
 
-For the list of all invoice fields and options see the [Invoices API documentation](http://docs.fakturoid.apiary.io/#invoices)
+For the list of all invoice fields and options see the [Invoices API documentation](https://fakturoid.docs.apiary.io/#reference/invoices)
 
 ## Handling error responses
 
