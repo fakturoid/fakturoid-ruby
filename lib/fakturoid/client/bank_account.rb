@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Fakturoid
   module Client
     class BankAccount < Fakturoid::Api

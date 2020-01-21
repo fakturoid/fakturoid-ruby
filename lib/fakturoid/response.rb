@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Fakturoid
   class Response
     attr_reader :response, :caller, :env, :body, :request_method
@@ -72,7 +74,7 @@ module Fakturoid
     end
 
     def body_has_key?(key)
-      body && body.is_a?(Hash) && body.key?(key.to_s)
+      body.is_a?(Hash) && body.key?(key.to_s)
     end
   end
 end

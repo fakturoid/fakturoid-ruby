@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'fakturoid/client/account'
 require 'fakturoid/client/bank_account'
 require 'fakturoid/client/user'

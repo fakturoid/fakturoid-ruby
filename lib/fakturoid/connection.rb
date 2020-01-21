@@ -1,6 +1,7 @@
+# frozen_string_literal: true
+
 module Fakturoid
   module Connection
-
     def default_options(options = {})
       content_type = options[:headers] && options[:headers][:content_type]
       {

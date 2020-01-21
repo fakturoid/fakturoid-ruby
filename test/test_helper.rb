@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 require 'minitest/autorun'
-require 'mocha/setup'
+require 'mocha/minitest'
 require 'shoulda-context'
 require 'pathname'
 require 'fakturoid'

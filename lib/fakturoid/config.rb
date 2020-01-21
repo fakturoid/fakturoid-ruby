@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Fakturoid
   class Config
     attr_accessor :email, :api_key, :account
@@ -10,7 +12,7 @@ module Fakturoid
     end
 
     def user_agent
-      if @user_agent.nil? || @user_agent.empty?
+      if !defined?(@user_agent) || @user_agent.nil? || @user_agent.empty?
         "Fakturoid ruby gem (#{email})"
       else
         @user_agent
