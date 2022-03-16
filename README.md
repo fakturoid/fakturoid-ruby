@@ -269,6 +269,3 @@ The Fakturoid gem raises exceptions if error response is returned from the serve
     </tr>
   </tbody>
 </table>
-
-## Thanks
-Development was supported by [eBallance Creative s.r.o.](http://www.eballance.cz)
