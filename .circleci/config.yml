@@ -1,8 +1,8 @@
-version: 2
+version: 2.1
 jobs:
   build:
     docker:
-      - image: circleci/ruby:2.6.3
+      - image: cimg/ruby:3.0.3
         environment:
           TZ: /usr/share/zoneinfo/Europe/Prague
     steps:
@@ -13,3 +13,13 @@ jobs:
       - run:
           name: Run tests
           command: bundle exec rake test
+
+      - restore_cache:
+          key: rubocop-cache-{{ .Branch }}-{{ checksum ".rubocop.yml" }}
+      - run:
+          name: Run robocop
+          command: bundle exec rubocop --fail-level C
+      - save_cache:
+          key: rubocop-cache-{{ .Branch }}-{{ checksum ".rubocop.yml" }}
+          paths:
+            - tmp/cache/rubocop_cache
