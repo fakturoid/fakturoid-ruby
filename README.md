@@ -35,7 +35,7 @@ end
 
 ### Account resource
 
-To get informations about your account in Fakturoid run following code:
+To get information about your account in Fakturoid run following code:
 
 ```ruby
 response = Fakturoid::Client::Account.current
@@ -73,6 +73,16 @@ response = Fakturoid::Client::User.find(user_id)
 ```
 
 For the list of all returned user fields see the [Users API documentation](https://fakturoid.docs.apiary.io/#reference/users)
+
+### Number Format resource
+
+For the list of invoice number formats which belongs to the current account:
+
+```ruby
+response = Fakturoid::Client::NumberFormat.invoices
+```
+
+For the list of all returned user fields see the [Number formats API documentation](https://fakturoid.docs.apiary.io/#reference/number-formats)
 
 ### Subject resource
 

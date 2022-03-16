@@ -2,6 +2,11 @@
 
 - Fix Faraday v1.x deprecations.
 - Add support for Faraday v2.x.
+- Add support form number formats endpoint
+
+  ```ruby
+  number_formats = Fakturoid::Client::NumberFormat.invoices
+  ```
 
 ## 0.3.0
 
