@@ -15,8 +15,13 @@ module Fakturoid
 
     def connection(options = {})
       @connection = Faraday.new default_options(options)
+
       # https://lostisland.github.io/faraday/middleware/authentication
-      @connection.request :basic_auth, Fakturoid::Api.config.email, Fakturoid::Api.config.api_key
+      if Fakturoid::Api.config.faraday_v1?
+        @connection.request :basic_auth, Fakturoid::Api.config.email, Fakturoid::Api.config.api_key
+      else
+        @connection.request :authorization, :basic, Fakturoid::Api.config.email, Fakturoid::Api.config.api_key
+      end
 
       @connection
     end

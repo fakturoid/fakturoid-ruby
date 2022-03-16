@@ -26,5 +26,15 @@ module Fakturoid
     def endpoint_without_account
       ENDPOINT
     end
+
+    def faraday_v1?
+      major_faraday_version == "1"
+    end
+
+  private
+
+    def major_faraday_version
+      @major_faraday_version ||= Faraday::VERSION.split(".").first
+    end
   end
 end

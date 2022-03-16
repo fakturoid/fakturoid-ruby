@@ -1,6 +1,7 @@
 ## Unreleased
 
 - Fix Faraday v1.x deprecations.
+- Add support for Faraday v2.x.
 
 ## 0.3.0
 
