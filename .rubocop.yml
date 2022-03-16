@@ -5,6 +5,7 @@ AllCops:
   Exclude:
     - 'Rakefile'
     - 'fakturoid.gemspec'
+    - 'vendor/**/*'
 
 Style/Documentation:
   Enabled: false
