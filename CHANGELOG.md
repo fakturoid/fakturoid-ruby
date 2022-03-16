@@ -1,3 +1,7 @@
+## Unreleased
+
+- Fix Faraday v1.x deprecations.
+
 ## 0.3.0
 
 - Add support for `variable_symbol` and `bank_account_id` param in invoice `fire` method.
