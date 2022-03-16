@@ -1,5 +1,6 @@
 AllCops:
   TargetRubyVersion: 2.7
+  NewCops: disable
   Exclude:
     - 'Rakefile'
     - 'fakturoid.gemspec'
@@ -57,11 +58,17 @@ Naming/MemoizedInstanceVariableName:
 Layout/EmptyLineAfterGuardClause:
   Enabled: false
 
+Layout/EmptyLineBetweenDefs:
+  Enabled: false
+
 Style/RescueStandardError:
   Exclude:
     - 'test/response_test.rb'
 
 Style/TrivialAccessors:
+  Enabled: false
+
+Style/StringLiterals:
   Enabled: false
 
 Style/SymbolArray:

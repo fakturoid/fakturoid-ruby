@@ -5,6 +5,7 @@ module Fakturoid
     include Connection
 
     attr_reader :method, :path, :caller
+
     HTTP_METHODS = [:get, :post, :patch, :delete].freeze
 
     def initialize(method, path, caller)

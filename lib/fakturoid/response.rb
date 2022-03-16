@@ -41,7 +41,7 @@ module Fakturoid
           raise error(PaginationError, 'Page does not exist')
         when 401 then raise error(AuthenticationError, 'Authentification failed')
         when 402 then raise error(BlockedAccountError, 'Account is blocked')
-        when 403 then
+        when 403
           raise error(DestroySubjectError, 'Cannot destroy subject with invoices')          if caller == Client::Subject && request_method == :delete
           raise error(SubjectLimitError,   'Subject limit for account reached')             if caller == Client::Subject && request_method == :post
           raise error(GeneratorLimitError, 'Recurring generator limit for account reached') if caller == Client::Generator
