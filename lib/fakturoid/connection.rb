@@ -2,11 +2,12 @@
 
 module Fakturoid
   module Connection
+    DEFAULT_CONTENT_TYPE = "application/json"
+
     def default_options(options = {})
-      content_type = options[:headers] && options[:headers][:content_type]
       {
         headers: {
-          content_type: content_type || "application/json",
+          content_type: options.dig(:headers, :content_type) || DEFAULT_CONTENT_TYPE,
           user_agent: Fakturoid::Api.config.user_agent
         },
         url: options[:url] || Fakturoid::Api.config.endpoint
