@@ -23,6 +23,14 @@ params to invoice index action methods
   Fakturoid::Client::Expense.all(custom_id: "custom-123")
   ```
 
+- Add support for pagination to search endpoints
+
+  ```ruby
+  Fakturoid::Client::Invoice.search("apples", page: 3)
+  Fakturoid::Client::Expense.search("computers", page: 2)
+  Fakturoid::Client::Subject.search("apple", page: 2)
+  ```
+
 ## 0.3.0
 
 - Add support for `variable_symbol` and `bank_account_id` param in invoice `fire` method.

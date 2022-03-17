@@ -28,9 +28,13 @@ module Fakturoid
         get_request("invoices/#{id}.json")
       end
 
-      def self.search(query)
+      def self.search(query, params = {})
         validate_search_query(query)
-        get_request("invoices/search.json", request_params: { query: query })
+
+        request_params = permit_params(params, :page)
+        request_params[:query] = query
+
+        get_request("invoices/search.json", request_params: request_params)
       end
 
       def self.download_pdf(id)
