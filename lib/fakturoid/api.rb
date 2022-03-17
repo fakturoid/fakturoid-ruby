@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require 'fakturoid/api/arguments'
-require 'fakturoid/api/http_methods'
+require "fakturoid/api/arguments"
+require "fakturoid/api/http_methods"
 
 module Fakturoid
   class Api

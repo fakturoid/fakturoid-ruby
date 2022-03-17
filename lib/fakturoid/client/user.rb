@@ -4,7 +4,7 @@ module Fakturoid
   module Client
     class User < Api
       def self.current
-        get_request('user.json', url: Fakturoid::Api.config.endpoint_without_account)
+        get_request("user.json", url: Fakturoid::Api.config.endpoint_without_account)
       end
 
       def self.find(id)
@@ -13,7 +13,7 @@ module Fakturoid
       end
 
       def self.all
-        get_request('users.json')
+        get_request("users.json")
       end
     end
   end

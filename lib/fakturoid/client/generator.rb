@@ -6,19 +6,19 @@ module Fakturoid
       def self.all(params = {})
         request_params = permit_params(params, :page, :since, :updated_since, :subject_id) || {}
 
-        get_request('generators.json', request_params: request_params)
+        get_request("generators.json", request_params: request_params)
       end
 
       def self.recurring(params = {})
         request_params = permit_params(params, :page, :since, :updated_since, :subject_id) || {}
 
-        get_request('generators/recurring.json', request_params: request_params)
+        get_request("generators/recurring.json", request_params: request_params)
       end
 
       def self.template(params = {})
         request_params = permit_params(params, :page, :since, :updated_since, :subject_id) || {}
 
-        get_request('generators/template.json', request_params: request_params)
+        get_request("generators/template.json", request_params: request_params)
       end
 
       def self.find(id)
@@ -27,7 +27,7 @@ module Fakturoid
       end
 
       def self.create(payload = {})
-        post_request('generators.json', payload: payload)
+        post_request("generators.json", payload: payload)
       end
 
       def self.update(id, payload = {})

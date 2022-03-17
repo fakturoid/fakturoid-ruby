@@ -6,7 +6,7 @@ module Fakturoid
       def self.all(params = {})
         request_params = permit_params(params, :page, :since, :updated_since, :custom_id) || {}
 
-        get_request('subjects.json', request_params: request_params)
+        get_request("subjects.json", request_params: request_params)
       end
 
       def self.find(id)
@@ -16,11 +16,11 @@ module Fakturoid
 
       def self.search(query)
         validate_search_query(query)
-        get_request('subjects/search.json', request_params: { query: query })
+        get_request("subjects/search.json", request_params: { query: query })
       end
 
       def self.create(payload = {})
-        post_request('subjects.json', payload: payload)
+        post_request("subjects.json", payload: payload)
       end
 
       def self.update(id, payload = {})

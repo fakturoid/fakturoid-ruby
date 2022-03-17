@@ -1,17 +1,17 @@
 # frozen_string_literal: true
 
-require 'uri'
-require 'multi_json'
-require 'faraday'
+require "uri"
+require "multi_json"
+require "faraday"
 
-require 'fakturoid/config'
-require 'fakturoid/connection'
-require 'fakturoid/request'
-require 'fakturoid/response'
-require 'fakturoid/api'
-require 'fakturoid/client'
-require 'fakturoid/version'
-require 'fakturoid/railtie' if defined?(::Rails)
+require "fakturoid/config"
+require "fakturoid/connection"
+require "fakturoid/request"
+require "fakturoid/response"
+require "fakturoid/api"
+require "fakturoid/client"
+require "fakturoid/version"
+require "fakturoid/railtie" if defined?(::Rails)
 
 module Fakturoid
   class ApiError < StandardError

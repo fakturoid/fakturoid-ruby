@@ -6,7 +6,7 @@ module Fakturoid
       content_type = options[:headers] && options[:headers][:content_type]
       {
         headers: {
-          content_type: content_type || 'application/json',
+          content_type: content_type || "application/json",
           user_agent: Fakturoid::Api.config.user_agent
         },
         url: options[:url] || Fakturoid::Api.config.endpoint

@@ -12,7 +12,7 @@ Fakturoid [API documentation](https://fakturoid.docs.apiary.io/).
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'fakturoid'
+gem "fakturoid"
 ```
 
 And then run:
@@ -25,10 +25,10 @@ Fakturoid gem is configured within config block placed in `config/initializers/f
 
 ```ruby
 Fakturoid.configure do |config|
-  config.email = 'yourfakturoid@email.com'
-  config.api_key = 'fasdff823fdasWRFKW843ladfjklasdf834'
-  config.account = 'applecorp' # former subdomain (first part of URL)
-  config.user_agent = 'Name of your app (your@email.com)'
+  config.email = "yourfakturoid@email.com"
+  config.api_key = "fasdff823fdasWRFKW843ladfjklasdf834"
+  config.account = "applecorp" # former subdomain (first part of URL)
+  config.user_agent = "Name of your app (your@email.com)"
 end
 ```
 
@@ -47,7 +47,7 @@ response.body # contains hash with returned body
 Accessing content of returned body:
 
 ```ruby
-response.body['name'] # return name of your company
+response.body["name"] # return name of your company
 response.name # alternative way of getting the name of your company
 ```
 
@@ -96,7 +96,7 @@ response = Fakturoid::Client::Subject.all(page: 2)
 Fulltext search subjects:
 
 ```ruby
-response = Fakturoid::Client::Subject.search('Client name')
+response = Fakturoid::Client::Subject.search("Client name")
 ```
 
 To find one subject use:
@@ -108,13 +108,13 @@ response = Fakturoid::Client::Subject.find(subject_id)
 You can create new subject with:
 
 ```ruby
-response = Fakturoid::Client::Subject.create(name: 'New client')
+response = Fakturoid::Client::Subject.create(name: "New client")
 ```
 
 To update subject use following code:
 
 ```ruby
-response = Fakturoid::Client::Subject.update(subject_id, name: 'Updated client')
+response = Fakturoid::Client::Subject.update(subject_id, name: "Updated client")
 ```
 
 Delete subject:
@@ -136,7 +136,7 @@ response = Fakturoid::Client::Invoice.all(page: 2)
 Fulltext search invoices:
 
 ```ruby
-response = Fakturoid::Client::Invoice.search('Client name')
+response = Fakturoid::Client::Invoice.search("Client name")
 ```
 
 To find one invoice use:
@@ -150,7 +150,7 @@ To download invoice in PDF format you can use following code:
 ```ruby
 response = Fakturoid::Client::Invoice.download_pdf(invoice_id)
 
-File.open '/path/to/file.pdf', 'w' do |f|
+File.open "/path/to/file.pdf", "w" do |f|
   f.write response.body
 end
 ```
@@ -163,9 +163,9 @@ invoice = {
   lines: [
     {
       quantity: 5,
-      unit_name: 'kg',
-      name: 'Sand',
-      unit_price: '100',
+      unit_name: "kg",
+      name: "Sand",
+      unit_price: "100",
       vat_rate: 21
     }
   ]
@@ -176,16 +176,16 @@ response = Fakturoid::Client::Invoice.create(invoice)
 Invoice actions (eg. pay invoice):
 
 ```ruby
-response = Fakturoid::Client::Invoice.fire(invoice_id, 'pay')
+response = Fakturoid::Client::Invoice.fire(invoice_id, "pay")
 ```
 
 Send invoice with customized message (for more information see [the API Documentation](https://fakturoid.docs.apiary.io/#reference/messages)):
 
 ```ruby
 message = {
-  email: 'testemail@testemail.cz',
-  email_copy: 'some@emailcopy.cz',
-  subject: 'I have an invoice for you',
+  email: "testemail@testemail.cz",
+  email_copy: "some@emailcopy.cz",
+  subject: "I have an invoice for you",
   message: "Hi,\n\nyou can find invoice no. #no# on the following page #link#\n\nHave a nice day"
 }
 
@@ -196,7 +196,7 @@ response.status_code # => 201
 To update invoice use following code:
 
 ```ruby
-response = Fakturoid::Client::Invoice.update(invoice_id, number: '2015-0015')
+response = Fakturoid::Client::Invoice.update(invoice_id, number: "2015-0015")
 ```
 
 Delete invoice:

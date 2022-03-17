@@ -6,7 +6,7 @@ module Fakturoid
       def self.all(params = {})
         request_params = permit_params(params, :page, :since) || {}
 
-        get_request('todos.json', request_params: request_params)
+        get_request("todos.json", request_params: request_params)
       end
 
       def self.toggle_completion(id)

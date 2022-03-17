@@ -13,7 +13,7 @@ module Fakturoid
       end
 
       def validate_search_query(query)
-        raise ArgumentError, 'Query parameter is required' if query.nil? || query.empty?
+        raise ArgumentError, "Query parameter is required" if query.nil? || query.empty?
         true
       end
     end

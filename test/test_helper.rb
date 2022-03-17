@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require 'minitest/autorun'
-require 'mocha/minitest'
-require 'shoulda-context'
-require 'pathname'
-require 'fakturoid'
+require "minitest/autorun"
+require "mocha/minitest"
+require "shoulda-context"
+require "pathname"
+require "fakturoid"
 
 module Fakturoid
   class TestCase < Minitest::Test
@@ -13,7 +13,7 @@ module Fakturoid
     end
 
     def load_fixture(file_name)
-      File.read(test_path.join('fixtures', file_name))
+      File.read(test_path.join("fixtures", file_name))
     end
   end
 end

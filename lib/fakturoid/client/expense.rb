@@ -6,7 +6,7 @@ module Fakturoid
       def self.all(params = {})
         request_params = permit_params(params, :page, :since, :updated_since, :number, :variable_symbol, :status, :subject_id) || {}
 
-        get_request('expenses.json', request_params: request_params)
+        get_request("expenses.json", request_params: request_params)
       end
 
       def self.find(id)
@@ -16,7 +16,7 @@ module Fakturoid
 
       def self.search(query)
         validate_search_query(query)
-        get_request('expenses/search.json', request_params: { query: query })
+        get_request("expenses/search.json", request_params: { query: query })
       end
 
       def self.fire(id, event, params = {})
@@ -28,7 +28,7 @@ module Fakturoid
       end
 
       def self.create(payload = {})
-        post_request('expenses.json', payload: payload)
+        post_request("expenses.json", payload: payload)
       end
 
       def self.update(id, payload = {})

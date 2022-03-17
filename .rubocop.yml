@@ -71,7 +71,7 @@ Style/TrivialAccessors:
   Enabled: false
 
 Style/StringLiterals:
-  Enabled: false
+  EnforcedStyle: double_quotes
 
 Style/SymbolArray:
   Enabled: false

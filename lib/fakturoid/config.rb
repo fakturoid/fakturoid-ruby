@@ -5,7 +5,7 @@ module Fakturoid
     attr_accessor :email, :api_key, :account
     attr_writer :user_agent
 
-    ENDPOINT = 'https://app.fakturoid.cz/api/v2'
+    ENDPOINT = "https://app.fakturoid.cz/api/v2"
 
     def initialize(&_block)
       yield self
