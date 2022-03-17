@@ -3,20 +3,22 @@
 module Fakturoid
   module Client
     class Invoice < Fakturoid::Api
+      INDEX_PARAMS = [:page, :since, :until, :updated_since, :updated_until, :number, :status, :subject_id, :custom_id].freeze
+
       def self.all(params = {})
-        request_params = permit_params(params, :page, :since, :updated_since, :number, :status, :subject_id) || {}
+        request_params = permit_params(params, *INDEX_PARAMS) || {}
 
         get_request("invoices.json", request_params: request_params)
       end
 
       def self.regular(params = {})
-        request_params = permit_params(params, :page, :since, :updated_since, :number, :status, :subject_id) || {}
+        request_params = permit_params(params, *INDEX_PARAMS) || {}
 
         get_request("invoices/regular.json", request_params: request_params)
       end
 
       def self.proforma(params = {})
-        request_params = permit_params(params, :page, :since, :updated_since, :number, :status, :subject_id) || {}
+        request_params = permit_params(params, *INDEX_PARAMS) || {}
 
         get_request("invoices/proforma.json", request_params: request_params)
       end

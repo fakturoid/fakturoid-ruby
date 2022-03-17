@@ -8,6 +8,15 @@
   number_formats = Fakturoid::Client::NumberFormat.invoices
   ```
 
+- Add support for `until`, `updated_until` and `custom_id`
+params to invoice index action methods
+
+  ```ruby
+  invoices = Fakturoid::Client::Invoice.all(since: "2022-03-01T00:00:00+01:00", until: "2022-03-31T23:59:59+01:00")
+  invoices = Fakturoid::Client::Invoice.regular(updated_since: "2022-03-01T00:00:00+01:00", updated_until: "2022-03-31T23:59:59+01:00")
+  proformas = Fakturoid::Client::Invoice.proforma(custom_id: "custom-123")
+  ```
+
 ## 0.3.0
 
 - Add support for `variable_symbol` and `bank_account_id` param in invoice `fire` method.
