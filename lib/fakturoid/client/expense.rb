@@ -4,7 +4,7 @@ module Fakturoid
   module Client
     class Expense < Fakturoid::Api
       def self.all(params = {})
-        request_params = permit_params(params, :page, :since, :updated_since, :number, :variable_symbol, :status, :subject_id) || {}
+        request_params = permit_params(params, :page, :since, :updated_since, :number, :variable_symbol, :status, :subject_id, :custom_id) || {}
 
         get_request("expenses.json", request_params: request_params)
       end

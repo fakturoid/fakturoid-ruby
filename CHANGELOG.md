@@ -17,6 +17,12 @@ params to invoice index action methods
   proformas = Fakturoid::Client::Invoice.proforma(custom_id: "custom-123")
   ```
 
+- Add support for `custom_id` param to expense index action method
+
+  ```ruby
+  Fakturoid::Client::Expense.all(custom_id: "custom-123")
+  ```
+
 ## 0.3.0
 
 - Add support for `variable_symbol` and `bank_account_id` param in invoice `fire` method.
