@@ -77,7 +77,7 @@ For the list of all returned user fields see the [Users API documentation](https
 
 ### Number Format resource
 
-For the list of invoice number formats which belongs to the current account:
+For the list of invoice number formats which belong to the current account:
 
 ```ruby
 response = Fakturoid::Client::NumberFormat.invoices
@@ -150,8 +150,8 @@ To download invoice in PDF format you can use following code:
 ```ruby
 response = Fakturoid::Client::Invoice.download_pdf(invoice_id)
 
-File.open "/path/to/file.pdf", "w" do |f|
-  f.write response.body
+File.open("/path/to/file.pdf", "wb") do |f|
+  f.write(response.body)
 end
 ```
 
