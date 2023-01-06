@@ -3,11 +3,10 @@
 module Fakturoid
   module Client
     class InventoryMoves < Fakturoid::Api
-      def self.all(inventory_item_id, params = {})
+      def self.all(params = {})
         request_params = permit_params(params, :page, :since, :updated_since, :inventory_item_id) || {}
 
-        validate_numerical_id(inventory_item_id)
-        get_request("/inventory_moves.json", request_params: request_params)
+        get_request("inventory_moves.json", request_params: request_params)
       end
 
       def self.find(inventory_item_id, id)
@@ -24,7 +23,7 @@ module Fakturoid
       def self.update(inventory_item_id, id, payload = {})
         validate_numerical_id(inventory_item_id)
         validate_numerical_id(id)
-        patch_request("inventory_items/#{inventory_item_id}/inventory_moves.json", payload: payload)
+        patch_request("inventory_items/#{inventory_item_id}/inventory_moves/#{id}.json", payload: payload)
       end
 
       def self.delete(inventory_item_id, id)

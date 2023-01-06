@@ -33,12 +33,12 @@ module Fakturoid
 
       def self.archive(id)
         validate_numerical_id(id)
-        patch_request("inventory_items/#{id}/archive.json")
+        post_request("inventory_items/#{id}/archive.json")
       end
 
       def self.unarchive(id)
         validate_numerical_id(id)
-        patch_request("inventory_items/#{id}/unarchive.json")
+        post_request("inventory_items/#{id}/unarchive.json")
       end
 
       def self.create(payload = {})
