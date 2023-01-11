@@ -215,13 +215,13 @@ To get all inventory items:
 response = Fakturoid::Client::InventoryItems.all
 ```
 
-To filter inventory items with certain SKU code:
+To filter inventory items by certain SKU code:
 
 ```ruby
 response = Fakturoid::Client::InventoryItems.all(sku: 'SKU1234')
 ```
 
-To search inventory items:
+To search inventory items (searches in `name`, `article_number` and `sku`):
 
 ```ruby
 response = Fakturoid::Client::InventoryItems.search('Item name')
@@ -285,7 +285,7 @@ To get get all inventory moves across all inventory items:
 response = Fakturoid::Client::InventoryMoves.all
 ```
 
-To filter inventory moves for a single inventory item:
+To get inventory moves for a single inventory item:
 
 ```ruby
 response = Fakturoid::Client::InventoryMoves.all(inventory_item_id: inventory_item_id)
@@ -300,8 +300,8 @@ response = Fakturoid::Client::InventoryMoves.find(inventory_item_id, inventory_m
 To create a stock-in inventory move:
 
 ```ruby
-Fakturoid::Client::InventoryMoves.create(
-  26,
+response = Fakturoid::Client::InventoryMoves.create(
+  inventory_item_id,
   direction: "in",
   moved_on: Date.today,
   quantity_change: 5,
@@ -314,8 +314,8 @@ Fakturoid::Client::InventoryMoves.create(
 To create a stock-out inventory move:
 
 ```ruby
-Fakturoid::Client::InventoryMoves.create(
-  26,
+response = Fakturoid::Client::InventoryMoves.create(
+  inventory_item_id,
   direction: "out",
   moved_on: Date.today,
   quantity_change: "1.5",
@@ -328,7 +328,11 @@ Fakturoid::Client::InventoryMoves.create(
 To update an inventory move:
 
 ```ruby
-response = Fakturoid::Client::InventoryMoves.update(inventory_item_id, inventory_move_id, direction: 'out', moved_on: Date.today, quantity_change: 2)
+inventory_move = {
+  private_note: "Text"
+  # Plus other fields if necessary
+}
+response = Fakturoid::Client::InventoryMoves.update(inventory_item_id, inventory_move_id, inventory_move)
 ```
 
 To delete an inventory move:
