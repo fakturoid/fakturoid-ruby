@@ -1,3 +1,7 @@
+## Unreleased
+
+- Add support for inventory items and moves.
+
 ## 0.4.0
 
 - Fix Faraday v1.x deprecations.
