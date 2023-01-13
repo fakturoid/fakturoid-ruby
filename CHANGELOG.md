@@ -1,4 +1,4 @@
-## Unreleased
+## 0.5.0
 
 - Add support for inventory items and moves.
 
