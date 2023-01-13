@@ -6,7 +6,7 @@ require 'fakturoid/version'
 Gem::Specification.new do |s|
   s.name          = "fakturoid"
   s.version       = Fakturoid::VERSION
-  s.authors       = ["Eda Riedl", "Lukáš Konarovský", "Oldřich Vetešník"]
+  s.authors       = ["Eda Riedl", "Lukáš Konarovský", "Oldřich Vetešník", "Kamil Hanus"]
   s.email         = ["podpora@fakturoid.cz"]
   s.summary       = %q{Ruby client for web based invoicing service www.fakturoid.cz}
   s.description   = %q{Ruby client for web based invoicing service www.fakturoid.cz}

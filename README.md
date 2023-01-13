@@ -207,6 +207,140 @@ response = Fakturoid::Client::Invoice.delete(invoice_id)
 
 For the list of all invoice fields and options see the [Invoices API documentation](https://fakturoid.docs.apiary.io/#reference/invoices)
 
+### InventoryItem resource
+
+To get all inventory items:
+
+```ruby
+response = Fakturoid::Client::InventoryItems.all
+```
+
+To filter inventory items by certain SKU code:
+
+```ruby
+response = Fakturoid::Client::InventoryItems.all(sku: 'SKU1234')
+```
+
+To search inventory items (searches in `name`, `article_number` and `sku`):
+
+```ruby
+response = Fakturoid::Client::InventoryItems.search('Item name')
+```
+
+To get all archived inventory items:
+
+```ruby
+response = Fakturoid::Client::InventoryItems.archived
+```
+
+To get a single inventory item:
+
+```ruby
+response = Fakturoid::Client::InventoryItems.find(inventory_item_id)
+```
+
+To create an inventory item:
+
+```ruby
+inventory_item = {
+  name: "Item name",
+  sku: "SKU1234",
+  track_quantity: true,
+  quantity: 100,
+  native_purchase_price: 500,
+  native_retail_price: 1000
+}
+response = Fakturoid::Client::InventoryItems.create(inventory_item)
+```
+
+To update an inventory item:
+
+```ruby
+response = Fakturoid::Client::InventoryItems.update(inventory_item_id, name: "Another name")
+```
+
+To archive an inventory item:
+
+```ruby
+response = Fakturoid::Client::InventoryItems.archive(inventory_item_id)
+```
+
+To unarchive an inventory item:
+
+```ruby
+response = Fakturoid::Client::InventoryItems.unarchive(inventory_item_id)
+```
+
+To delete an inventory item:
+
+```ruby
+response = Fakturoid::Client::InventoryItems.delete(inventory_item_id)
+```
+
+### InventoryMove resource
+
+To get get all inventory moves across all inventory items:
+
+```ruby
+response = Fakturoid::Client::InventoryMoves.all
+```
+
+To get inventory moves for a single inventory item:
+
+```ruby
+response = Fakturoid::Client::InventoryMoves.all(inventory_item_id: inventory_item_id)
+```
+
+To get a single inventory move:
+
+```ruby
+response = Fakturoid::Client::InventoryMoves.find(inventory_item_id, inventory_move_id)
+```
+
+To create a stock-in inventory move:
+
+```ruby
+response = Fakturoid::Client::InventoryMoves.create(
+  inventory_item_id,
+  direction: "in",
+  moved_on: Date.today,
+  quantity_change: 5,
+  purchase_price: "249.99",
+  purchase_currency: "CZK",
+  private_note: "Bought with discount"
+)
+```
+
+To create a stock-out inventory move:
+
+```ruby
+response = Fakturoid::Client::InventoryMoves.create(
+  inventory_item_id,
+  direction: "out",
+  moved_on: Date.today,
+  quantity_change: "1.5",
+  retail_price: 50,
+  retail_currency: "EUR",
+  native_retail_price: "1250"
+)
+```
+
+To update an inventory move:
+
+```ruby
+inventory_move = {
+  private_note: "Text"
+  # Plus other fields if necessary
+}
+response = Fakturoid::Client::InventoryMoves.update(inventory_item_id, inventory_move_id, inventory_move)
+```
+
+To delete an inventory move:
+
+```ruby
+response = Fakturoid::Client::InventoryMoves.delete(inventory_item_id, inventory_move_id)
+```
+
 ## Handling error responses
 
 The Fakturoid gem raises exceptions if error response is returned from the servers. All exceptions contains following attributes:
