@@ -403,3 +403,13 @@ The Fakturoid gem raises exceptions if error response is returned from the serve
     </tr>
   </tbody>
 </table>
+
+## Development
+
+```sh
+git clone <repo-url>
+cd fakturoid-ruby
+bundle
+bundle exec rake # Run tests
+bundle exec rake build # Test the package building process
+```

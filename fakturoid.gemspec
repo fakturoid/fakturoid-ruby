@@ -1,30 +1,42 @@
-# coding: utf-8
-lib = File.expand_path('../lib', __FILE__)
-$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'fakturoid/version'
+# frozen_string_literal: true
 
-Gem::Specification.new do |s|
-  s.name          = "fakturoid"
-  s.version       = Fakturoid::VERSION
-  s.authors       = ["Eda Riedl", "Lukáš Konarovský", "Oldřich Vetešník", "Kamil Hanus"]
-  s.email         = ["podpora@fakturoid.cz"]
-  s.summary       = %q{Ruby client for web based invoicing service www.fakturoid.cz}
-  s.description   = %q{Ruby client for web based invoicing service www.fakturoid.cz}
-  s.homepage      = "https://github.com/fakturoid/fakturoid-ruby"
-  s.license       = "MIT"
+require_relative "lib/fakturoid/version"
 
-  s.files         = `git ls-files -z`.split("\x0")
-  s.executables   = s.files.grep(%r{^bin/}) { |f| File.basename(f) }
-  s.test_files    = s.files.grep(%r{^(test|spec|features)/})
-  s.require_paths = ["lib"]
+Gem::Specification.new do |spec| # rubocop:disable Metrics/BlockLength
+  spec.name          = "fakturoid"
+  spec.version       = Fakturoid::VERSION
+  spec.authors       = ["Eda Riedl", "Lukáš Konarovský", "Oldřich Vetešník", "Kamil Hanus"]
+  spec.email         = ["podpora@fakturoid.cz"]
 
-  s.add_dependency 'multi_json'
-  s.add_dependency 'faraday'
+  spec.summary       = "Ruby client for web based invoicing service www.fakturoid.cz"
+  spec.description   = "Ruby client for web based invoicing service www.fakturoid.cz"
+  spec.homepage      = "https://github.com/fakturoid/fakturoid-ruby"
+  spec.license       = "MIT"
+  spec.required_ruby_version = ">= 2.7.0" # rubocop:disable Gemspec/RequiredRubyVersion
 
-  s.add_development_dependency "bundler", "> 1"
-  s.add_development_dependency "rake"
-  s.add_development_dependency "minitest"
-  s.add_development_dependency "shoulda-context"
-  s.add_development_dependency "mocha"
-  s.add_development_dependency "rubocop"
+  spec.metadata["homepage_uri"]    = spec.homepage
+  spec.metadata["source_code_uri"] = "https://github.com/fakturoid/fakturoid-ruby"
+  spec.metadata["changelog_uri"]   = "https://github.com/fakturoid/fakturoid-ruby/blob/main/CHANGELOG.md"
+
+  # Specify which files should be added to the gem when it is released.
+  # The `git ls-files -z` loads the files in the RubyGem that have been added into git.
+  spec.files = Dir.chdir(__dir__) do
+    `git ls-files -z`.split("\x0").reject do |f|
+      (File.expand_path(f) == __FILE__) ||
+        f.start_with?(*%w[bin/ test/ spec/ features/ .git appveyor Gemfile])
+    end
+  end
+  spec.bindir = "exe"
+  spec.executables = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
+  spec.require_paths = ["lib"]
+
+  spec.add_dependency "faraday"
+  spec.add_dependency "multi_json"
+
+  spec.add_development_dependency "bundler", "> 1"
+  spec.add_development_dependency "minitest"
+  spec.add_development_dependency "mocha"
+  spec.add_development_dependency "rake"
+  spec.add_development_dependency "rubocop"
+  spec.add_development_dependency "shoulda-context"
 end
