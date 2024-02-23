@@ -16,13 +16,15 @@ module Fakturoid
 
     def call(params = {})
       raise ArgumentError, "Unknown http method: #{method}" unless HTTP_METHODS.include?(method.to_sym)
+      raise ArgumentError, "Account slug is not set. You must set it before calling this method." if params[:url].nil? && !Api.config.account_present?
 
       request_params = params[:request_params] || {}
+
+      Fakturoid.auth.refresh_access_token if !params[:auth_with_client_id_and_secret] && Fakturoid.auth.refresh_access_token?
 
       http_connection = connection(params)
       response = http_connection.send(method) do |req|
         req.url path, request_params
-        req.headers["X-Client-Env"] = "Ruby #{RUBY_VERSION}"
         req.body = MultiJson.dump(params[:payload]) if params.key?(:payload)
       end
       Response.new(response, caller, method)

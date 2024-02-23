@@ -2,10 +2,11 @@
 
 module Fakturoid
   class Config
-    attr_accessor :email, :api_key, :account
+    attr_accessor :email, :client_id, :client_secret, :account, :redirect_uri, :credentials
     attr_writer :user_agent
 
-    ENDPOINT = "https://app.fakturoid.cz/api/v2"
+    ENDPOINT = "https://app.fakturoid.cz/api/v3"
+    # ENDPOINT = "http://app.fakturoid.localhost/api/v3"
 
     def initialize(&_block)
       yield self
@@ -29,6 +30,10 @@ module Fakturoid
 
     def faraday_v1?
       major_faraday_version == "1"
+    end
+
+    def account_present?
+      !account.nil? && !account.empty?
     end
 
   private

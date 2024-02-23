@@ -6,6 +6,7 @@ require "faraday"
 
 require "fakturoid/config"
 require "fakturoid/connection"
+require "fakturoid/auth"
 require "fakturoid/request"
 require "fakturoid/response"
 require "fakturoid/api"
@@ -43,6 +44,14 @@ module Fakturoid
   class ServerError < ApiError; end
 
   def self.configure(&block)
-    Fakturoid::Api.configure(&block)
+    Api.configure(&block)
+  end
+
+  def self.account=(account)
+    Api.config.account = account
+  end
+
+  def self.auth
+    @auth ||= Auth.new
   end
 end

@@ -23,12 +23,73 @@ And then run:
 
 Fakturoid gem is configured within config block placed in `config/initializers/fakturoid.rb`:
 
+### Authorization by OAuth 2.0
+
+You can read more about authorization on our web [](https://www.fakturoid.cz/podpora/automatizace/api#api-v3-pristupove-udaje)
+
+#### Authorization Code Flow
+
 ```ruby
 Fakturoid.configure do |config|
   config.email = "yourfakturoid@email.com"
-  config.api_key = "fasdff823fdasWRFKW843ladfjklasdf834"
-  config.account = "applecorp" # former subdomain (first part of URL)
+  config.client_id = "{fakturoid-client-id}"
+  config.client_secret = "{fakturoid-client-secret}"
+  # config.account = "{fakturoid-account-slug}" # Or set this later dynamically
   config.user_agent = "Name of your app (your@email.com)"
+end
+
+# To be rendered on a web page. State is optional.
+link_to Fakturoid.auth.url, "Enable Fakturoid Integration"
+link_to Fakturoid.auth.url(state: "abcd1234"), "Enable Fakturoid Integration"
+
+# `Fakturoid.auth.credentials` will always return current credentials.
+credentials = Fakturoid.auth.request_credentials(code: params[:code])
+credentials = Fakturoid.auth.credentials
+
+# You can load credentials from external store and pass it into the setter.
+Fakturoid.auth.credentials = {
+  access_token: "a6d3b9de2d9df5af5f57200151df5c85790c9106cd212856aec9a057eed969ff53ce1e7a9aa563e2",
+  refresh_token: "ea6948de33042ee3d06b7764dfa620285c67689aea98e29a093538c572c6743d7862417c69ae2ad3",
+  expires_at: "2024-02-23T17:24:53+01:00"
+}
+
+# Dynamically set account slug.
+Fakturoi.account = Fakturoid::Client::User.current.body["accounts"].first["slug"]
+
+# Refresh will be called automatically but it can be triggered manually.
+Fakturoid.auth.refresh_access_token
+Fakturoid.auth.revoke_access
+
+# Don't forget to update your `access_code` when it gets refreshed.
+Fakturoid.auth.on_access_token_refresh do |credentials|
+  # Store new credentials into database.
+end
+```
+
+#### Client Credentials Flow
+
+```ruby
+Fakturoid.configure do |config|
+  config.email = "yourfakturoid@email.com"
+  config.client_id = "{fakturoid-client-id}"
+  config.client_secret = "{fakturoid-client-secret}"
+  config.account = "{fakturoid-account-slug}"
+  config.user_agent = "Name of your app (your@email.com)"
+end
+
+# `Fakturoid.auth.credentials` will always return current credentials.
+credentials = Fakturoid.auth.request_client_credentials
+credentials = Fakturoid.auth.credentials
+
+# You can load credentials from external store and pass it into the setter.
+Fakturoid.auth.credentials = {
+  access_token: "2cb5a4fced155320a98fc3d6667fa5aa4e0c8fc7fae48d610acd26149ab0e360d3a4070ab0c1f8d4",
+  expires_at: "2024-02-23T19:40:43+01:00"
+}
+
+# Don't forget to update your `access_code` when it gets refreshed.
+Fakturoid.auth.on_access_token_refresh do |credentials|
+  # Store new credentials into database.
 end
 ```
 
