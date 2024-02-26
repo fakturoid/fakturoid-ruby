@@ -4,15 +4,14 @@ require "uri"
 require "multi_json"
 require "faraday"
 
-require "fakturoid/config"
-require "fakturoid/connection"
-require "fakturoid/auth"
-require "fakturoid/request"
-require "fakturoid/response"
-require "fakturoid/api"
-require "fakturoid/client"
-require "fakturoid/version"
-require "fakturoid/railtie" if defined?(::Rails)
+require_relative "fakturoid/utils"
+require_relative "fakturoid/config"
+require_relative "fakturoid/response"
+require_relative "fakturoid/api"
+require_relative "fakturoid/oauth"
+require_relative "fakturoid/client"
+require_relative "fakturoid/version"
+require_relative "fakturoid/railtie" if defined?(::Rails)
 
 module Fakturoid
   class ApiError < StandardError
@@ -25,8 +24,9 @@ module Fakturoid
     end
   end
 
+  class ConfigurationError      < ApiError; end
+  class OauthError              < ApiError; end
   class ContentTypeError        < ApiError; end
-  class UserAgentError          < ApiError; end
   class AuthenticationError     < ApiError; end
   class BlockedAccountError     < ApiError; end
   class RateLimitError          < ApiError; end
@@ -43,15 +43,16 @@ module Fakturoid
   class ClientError < ApiError; end
   class ServerError < ApiError; end
 
+  HTTP_GET    = :get
+  HTTP_POST   = :post
+  HTTP_PATCH  = :patch
+  HTTP_DELETE = :delete
+
   def self.configure(&block)
-    Api.configure(&block)
+    Client.configure(&block)
   end
 
-  def self.account=(account)
-    Api.config.account = account
-  end
-
-  def self.auth
-    @auth ||= Auth.new
+  def self.client
+    @client ||= Client.new
   end
 end

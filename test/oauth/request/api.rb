@@ -2,7 +2,7 @@
 
 require "test_helper"
 
-class Fakturoid::RequestTest < Fakturoid::TestCase
+class Fakturoid::Oauth::Request::ApiTest < Fakturoid::TestCase
   should "should return pdf" do
     pdf = load_fixture("invoice.pdf")
     test_connection = Faraday.new do |builder|
@@ -11,7 +11,7 @@ class Fakturoid::RequestTest < Fakturoid::TestCase
       end
       builder.headers = { content_type: "application/pdf" }
     end
-    Fakturoid::Request.any_instance.stubs(:connection).returns(test_connection)
+    Fakturoid::Oauth::Request.any_instance.stubs(:connection).returns(test_connection)
 
     response = Fakturoid::Request.new(:get, "invoices/5/download.pdf", Fakturoid::Client::Invoice).call
     assert !response.json?

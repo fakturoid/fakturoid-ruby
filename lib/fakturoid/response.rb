@@ -2,18 +2,22 @@
 
 module Fakturoid
   class Response
-    attr_reader :response, :caller, :env, :body, :request_method
+    attr_reader :response, :caller, :body, :request_method
 
     def initialize(faraday_response, caller, request_method)
       @response = faraday_response
       @caller = caller
-      @env = faraday_response.env
       @request_method = request_method.to_sym
 
       if !(env.body.nil? || env.body.empty? || (json? && env.body =~ /\A\s+\z/))
         @body = json? ? MultiJson.load(env.body) : env.body
       end
+
       handle_response
+    end
+
+    def env
+      response.env
     end
 
     def status_code
@@ -37,14 +41,13 @@ module Fakturoid
     def handle_response
       case status_code
         when 400
-          raise error(UserAgentError,  "User-Agent header missing") if env.request_headers["User-Agent"].nil? || env.request_headers["User-Agent"].empty?
           raise error(PaginationError, "Page does not exist")
-        when 401 then raise error(AuthenticationError, "Authentification failed")
+        when 401 then raise error(AuthenticationError, "Authentication failed")
         when 402 then raise error(BlockedAccountError, "Account is blocked")
         when 403
-          raise error(DestroySubjectError, "Cannot destroy subject with invoices")          if caller == Client::Subject && request_method == :delete
-          raise error(SubjectLimitError,   "Subject limit for account reached")             if caller == Client::Subject && request_method == :post
-          raise error(GeneratorLimitError, "Recurring generator limit for account reached") if caller == Client::Generator
+          raise error(DestroySubjectError, "Cannot destroy subject with invoices")          if caller == Api::Subject && request_method == :delete
+          raise error(SubjectLimitError,   "Subject limit for account reached")             if caller == Api::Subject && request_method == :post
+          raise error(GeneratorLimitError, "Recurring generator limit for account reached") if caller == Api::Generator # TODO: Make this `RecurringGenerator`
           raise error(UnsupportedFeatureError, "Feature unavailable for account plan")
         when 404 then raise error(RecordNotFoundError, "Record not found")
         when 415 then raise error(ContentTypeError,    "Unsupported Content-Type")

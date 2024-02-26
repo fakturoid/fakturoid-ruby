@@ -32,10 +32,11 @@ You can read more about authorization on our web [](https://www.fakturoid.cz/pod
 ```ruby
 Fakturoid.configure do |config|
   config.email = "yourfakturoid@email.com"
-  config.client_id = "{fakturoid-client-id}"
-  config.client_secret = "{fakturoid-client-secret}"
   # config.account = "{fakturoid-account-slug}" # Or set this later dynamically
   config.user_agent = "Name of your app (your@email.com)"
+  config.client_id = "{fakturoid-client-id}"
+  config.client_secret = "{fakturoid-client-secret}"
+  config.oauth_flow = "authorization_code"
 end
 
 # To be rendered on a web page. State is optional.
@@ -71,10 +72,11 @@ end
 ```ruby
 Fakturoid.configure do |config|
   config.email = "yourfakturoid@email.com"
-  config.client_id = "{fakturoid-client-id}"
-  config.client_secret = "{fakturoid-client-secret}"
   config.account = "{fakturoid-account-slug}"
   config.user_agent = "Name of your app (your@email.com)"
+  config.client_id = "{fakturoid-client-id}"
+  config.client_secret = "{fakturoid-client-secret}"
+  config.oauth_flow = "client_credentials"
 end
 
 # `Fakturoid.auth.credentials` will always return current credentials.
@@ -419,9 +421,6 @@ The Fakturoid gem raises exceptions if error response is returned from the serve
   <tbody>
     <tr>
       <td>ContentTypeError</td><td>415 Unsupported Media Type</td><td>Wrong content type</td>
-    </tr>
-    <tr>
-      <td>UserAgentError</td><td>400 Bad Request</td><td>Missing `user_agent` configuration</td>
     </tr>
     <tr>
       <td>PaginationError</td><td>400 Bad Request</td><td>Page with given number does not exist</td>
