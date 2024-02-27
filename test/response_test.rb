@@ -31,7 +31,7 @@ class Fakturoid::ResponseTest < Fakturoid::TestCase
         stub.get("invoices.json?page=4") { |_env| [400, { content_type: "application/json" }, " "] }
       end
 
-      assert_raises(Fakturoid::PaginationError) { Fakturoid::Response.new(test_connection.get("invoices.json?page=4"), Fakturoid::Api::Invoice, Fakturoid::HTTP_GET) }
+      assert_raises(Fakturoid::ClientError) { Fakturoid::Response.new(test_connection.get("invoices.json?page=4"), Fakturoid::Api::Invoice, Fakturoid::HTTP_GET) }
     end
 
     should "raise authentication error" do
@@ -49,7 +49,7 @@ class Fakturoid::ResponseTest < Fakturoid::TestCase
 
       begin
         Fakturoid::Response.new(test_connection.get("account.json"), Fakturoid::Api::Account, Fakturoid::HTTP_GET)
-      rescue Fakturoid::BlockedAccountError => e
+      rescue Fakturoid::ClientError => e
         assert_equal 402, e.response_code
         assert e.response_body.key?("status")
       rescue => e
@@ -64,7 +64,7 @@ class Fakturoid::ResponseTest < Fakturoid::TestCase
         stub.delete("subjects/5.json") { |_env| [403, { content_type: "application/json" }, " "] }
       end
 
-      assert_raises(Fakturoid::DestroySubjectError) { Fakturoid::Response.new(test_connection.delete("subjects/5.json"), Fakturoid::Api::Subject, Fakturoid::HTTP_DELETE) }
+      assert_raises(Fakturoid::ClientError) { Fakturoid::Response.new(test_connection.delete("subjects/5.json"), Fakturoid::Api::Subject, Fakturoid::HTTP_DELETE) }
     end
 
     should "raise subject limit error" do
@@ -72,7 +72,7 @@ class Fakturoid::ResponseTest < Fakturoid::TestCase
         stub.post("subjects.json") { |_env| [403, { content_type: "application/json" }, " "] }
       end
 
-      assert_raises(Fakturoid::SubjectLimitError) { Fakturoid::Response.new(test_connection.post("subjects.json", name: "Customer s.r.o."), Fakturoid::Api::Subject, Fakturoid::HTTP_POST) }
+      assert_raises(Fakturoid::ClientError) { Fakturoid::Response.new(test_connection.post("subjects.json", name: "Customer s.r.o."), Fakturoid::Api::Subject, Fakturoid::HTTP_POST) }
     end
 
     should "raise generator limit error" do
@@ -80,7 +80,7 @@ class Fakturoid::ResponseTest < Fakturoid::TestCase
         stub.post("generators.json") { |_env| [403, { content_type: "application/json" }, " "] }
       end
 
-      assert_raises(Fakturoid::GeneratorLimitError) { Fakturoid::Response.new(test_connection.post("generators.json", name: "Customer s.r.o.", recurring: true), Fakturoid::Api::Generator, Fakturoid::HTTP_POST) }
+      assert_raises(Fakturoid::ClientError) { Fakturoid::Response.new(test_connection.post("generators.json", name: "Customer s.r.o.", recurring: true), Fakturoid::Api::Generator, Fakturoid::HTTP_POST) }
     end
 
     should "raise unsupported feature error" do
@@ -88,7 +88,7 @@ class Fakturoid::ResponseTest < Fakturoid::TestCase
         stub.post("invoices/5/message.json") { |_env| [403, { content_type: "application/json" }, " "] }
       end
 
-      assert_raises(Fakturoid::UnsupportedFeatureError) { Fakturoid::Response.new(test_connection.post("invoices/5/message.json", email: "customer@email.cz"), Fakturoid::Api::Invoice, Fakturoid::HTTP_POST) }
+      assert_raises(Fakturoid::ClientError) { Fakturoid::Response.new(test_connection.post("invoices/5/message.json", email: "customer@email.cz"), Fakturoid::Api::Invoice, Fakturoid::HTTP_POST) }
     end
 
     should "raise record not found error" do
@@ -96,7 +96,7 @@ class Fakturoid::ResponseTest < Fakturoid::TestCase
         stub.get("invoices/10.json") { |_env| [404, { content_type: "application/json" }, " "] }
       end
 
-      assert_raises(Fakturoid::RecordNotFoundError) { Fakturoid::Response.new(test_connection.get("invoices/10.json"), Fakturoid::Api::Invoice, Fakturoid::HTTP_GET) }
+      assert_raises(Fakturoid::ClientError) { Fakturoid::Response.new(test_connection.get("invoices/10.json"), Fakturoid::Api::Invoice, Fakturoid::HTTP_GET) }
     end
 
     should "raise content type error" do
@@ -104,7 +104,7 @@ class Fakturoid::ResponseTest < Fakturoid::TestCase
         stub.get("invoices/5.xml") { |_env| [415, { content_type: "application/xml" }, " "] }
       end
 
-      assert_raises(Fakturoid::ContentTypeError) { Fakturoid::Response.new(test_connection.get("invoices/5.xml"), Fakturoid::Api::Invoice, Fakturoid::HTTP_GET) }
+      assert_raises(Fakturoid::ClientError) { Fakturoid::Response.new(test_connection.get("invoices/5.xml"), Fakturoid::Api::Invoice, Fakturoid::HTTP_GET) }
     end
 
     should "raise invalid record error" do
@@ -114,7 +114,7 @@ class Fakturoid::ResponseTest < Fakturoid::TestCase
 
       begin
         Fakturoid::Response.new(test_connection.patch("invoice/5.json"), Fakturoid::Api::Invoice, Fakturoid::HTTP_PATCH)
-      rescue Fakturoid::InvalidRecordError => e
+      rescue Fakturoid::ClientError => e
         assert_equal 422, e.response_code
         assert e.response_body.key?("errors")
       rescue => e
@@ -129,7 +129,7 @@ class Fakturoid::ResponseTest < Fakturoid::TestCase
         stub.get("invoices/5.json") { |_env| [429, { content_type: "application/json" }, " "] }
       end
 
-      assert_raises(Fakturoid::RateLimitError) { Fakturoid::Response.new(test_connection.get("invoices/5.json"), Fakturoid::Api::Invoice, Fakturoid::HTTP_GET) }
+      assert_raises(Fakturoid::ClientError) { Fakturoid::Response.new(test_connection.get("invoices/5.json"), Fakturoid::Api::Invoice, Fakturoid::HTTP_GET) }
     end
 
     should "raise read only site error" do
@@ -137,7 +137,7 @@ class Fakturoid::ResponseTest < Fakturoid::TestCase
         stub.delete("invoices/5.json") { |_env| [503, { content_type: "application/json" }, " "] }
       end
 
-      assert_raises(Fakturoid::ReadOnlySiteError) { Fakturoid::Response.new(test_connection.delete("invoices/5.json"), Fakturoid::Api::Invoice, Fakturoid::HTTP_DELETE) }
+      assert_raises(Fakturoid::ServerError) { Fakturoid::Response.new(test_connection.delete("invoices/5.json"), Fakturoid::Api::Invoice, Fakturoid::HTTP_DELETE) }
     end
   end
 end
