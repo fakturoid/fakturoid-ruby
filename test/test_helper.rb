@@ -16,13 +16,13 @@ module Fakturoid
       File.read(test_path.join("fixtures", file_path))
     end
 
-    def mock_faraday_connection(&block)
+    def mock_faraday_connection(params = {}, &block)
       raise ArgumentError, "No block given" unless block_given?
 
       [Fakturoid::Oauth::Request::Api].each do |klass|
         test_connection = Faraday.new do |builder|
           builder.adapter(:test, &block)
-          builder.headers = { content_type: "application/json", accept: "application/json" }
+          builder.headers = params[:headers] || { content_type: "application/json" }
         end
 
         klass.any_instance.stubs(:connection).returns(test_connection)
