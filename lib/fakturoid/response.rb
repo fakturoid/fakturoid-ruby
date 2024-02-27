@@ -9,6 +9,8 @@ module Fakturoid
       @caller = caller
       @request_method = request_method.to_sym
 
+      env = response.env
+
       if !(env.body.nil? || env.body.empty? || (json? && env.body =~ /\A\s+\z/))
         @body = json? ? MultiJson.load(env.body) : env.body
       end
@@ -16,20 +18,16 @@ module Fakturoid
       handle_response
     end
 
-    def env
-      response.env
-    end
-
     def status_code
-      env["status"]
+      response.env["status"]
     end
 
     def json?
-      env.request_headers["Content-Type"] == "application/json"
+      response.env.request_headers["Content-Type"] == "application/json"
     end
 
     def headers
-      env.response_headers
+      response.env.response_headers
     end
 
     def inspect
