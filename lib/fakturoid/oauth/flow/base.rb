@@ -19,7 +19,7 @@ module Fakturoid
         end
 
         def fetch_access_token
-          raise NotImplementedError, "Get access token is not supported"
+          raise NotImplementedError, "Fetch access token is not supported"
         end
 
         def revoke_access

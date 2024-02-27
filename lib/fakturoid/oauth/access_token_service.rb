@@ -13,11 +13,11 @@ module Fakturoid
       def perform_request(method, path, params)
         check_access_token
 
-        begin
-          Request::Api.new(method, path, client).call(params)
-        rescue AuthenticationError
-          fetch_access_token
-          Request::Api.new(method, path, client).call(params)
+        # TODO: Should it fetch if it's nil in case of first call via client credentials flow?
+        fetch_access_token if Utils.empty?(client.config.access_token) || client.config.access_token_near_expiration?
+
+        Request::Api.new(method, path, client).call(params).tap do
+          client.call_access_token_refresh_callback
         end
       end
 

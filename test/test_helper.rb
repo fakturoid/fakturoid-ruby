@@ -42,7 +42,8 @@ module Fakturoid
 
         response = OpenStruct.new(
           access_token: "access",
-          token_type: "Bearer"
+          token_type: "Bearer",
+          expires_at: Time.now.to_i + 2 * 3600 - 10
         )
         Fakturoid.client.config.update_oauth_tokens(response)
 

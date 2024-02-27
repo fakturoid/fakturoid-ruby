@@ -2,8 +2,10 @@
 
 module Fakturoid
   class Config
-    attr_accessor :email, :account, :client_id, :client_secret, :oauth_flow, :redirect_uri,
-                  :refresh_token, :access_token, :access_token_type
+    EXPIRY_BUFFER_IN_SECONDS = 10
+
+    attr_accessor :email, :account, :client_id, :client_secret, :oauth_flow, :redirect_uri, :access_token_refresh_callback,
+                  :refresh_token, :access_token, :expires_at, :access_token_type
     attr_writer :user_agent
 
     SUPPORTED_FLOWS = %w[authorization_code client_credentials].freeze
@@ -63,10 +65,36 @@ module Fakturoid
       oauth_flow == "client_credentials"
     end
 
+    # TODO: This should be able to accept a hash. It's not ideal to store the access_token_type, the service should know it automatically.
     def update_oauth_tokens(tokens)
       self.refresh_token = tokens.refresh_token unless Utils.empty?(tokens.refresh_token)
       self.access_token = tokens.access_token
       self.access_token_type = tokens.token_type
+      self.expires_at =
+        if tokens.respond_to?(:expires_at)
+          # TODO: Make this less ugly.
+          if tokens.expires_at.is_a?(String)
+            DateTime.parse(tokens.expires_at)
+          else
+            tokens.expires_at
+          end
+        else
+          prepare_expiry_time(tokens.expires_in)
+        end
+      self.access_token_type ||= tokens.access_token_type
+    end
+
+    def access_token_near_expiration?
+      DateTime.now > expires_at
+    end
+
+    def credentials
+      {
+        access_token: access_token,
+        refresh_token: refresh_token,
+        expires_at: expires_at,
+        access_token_type: access_token_type
+      }
     end
 
     def duplicate(local_config)
@@ -91,6 +119,11 @@ module Fakturoid
       raise ConfigurationError, "`email` or `user` agent is required" if Utils.empty?(email) && Utils.empty?(user_agent)
       raise ConfigurationError, "Client credentials are required" if Utils.empty?(client_id) || Utils.empty?(client_secret)
       raise ConfigurationError, "`redirect_uri` is required for Authorization Code Flow" if authorization_code_flow? && Utils.empty?(redirect_uri)
+    end
+
+    def prepare_expiry_time(expires_in)
+      time = Time.now + (expires_in - EXPIRY_BUFFER_IN_SECONDS)
+      time.to_datetime # DateTime serializes into is8601, Time doesn't, so it can be saved as JSON safely.
     end
   end
 end
