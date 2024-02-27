@@ -17,7 +17,7 @@ module Fakturoid
       end
 
       def search(query, params = {})
-        validate_search_query(query)
+        Utils.validate_search_query(query)
 
         request_params = Utils.permit_params(params, :page)
         request_params[:query] = query
