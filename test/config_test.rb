@@ -15,7 +15,7 @@ class Fakturoid::ConfigTest < Fakturoid::TestCase
 
     assert_equal "test@email.cz", config.email
     assert_equal "testaccount", config.account
-    assert_equal "Fakturoid ruby gem - My test app (test@email.cz)", config.user_agent
+    assert_equal "My test app (test@email.cz)", config.user_agent
     assert_equal "XXX", config.client_id
     assert_equal "YYY", config.client_secret
     assert_equal "client_credentials", config.oauth_flow
@@ -36,7 +36,7 @@ class Fakturoid::ConfigTest < Fakturoid::TestCase
 
     assert_equal "test@email.cz", config.email
     assert_equal "testaccount", config.account
-    assert_equal "Fakturoid ruby gem - My test app (test@email.cz)", config.user_agent
+    assert_equal "My test app (test@email.cz)", config.user_agent
     assert_equal "XXX", config.client_id
     assert_equal "YYY", config.client_secret
     assert_equal "authorization_code", config.oauth_flow

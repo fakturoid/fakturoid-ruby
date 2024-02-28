@@ -23,7 +23,7 @@ module Fakturoid
       if Utils.empty?(@user_agent)
         "Fakturoid ruby gem (#{email})"
       else
-        "Fakturoid ruby gem - #{@user_agent}"
+        @user_agent
       end
     end
 
