@@ -14,7 +14,7 @@ module Fakturoid
           }
 
           response = perform_request(HTTP_POST, "token.json", payload: payload)
-          client.config.update_oauth_tokens(response)
+          client.config.credentials.update(response.body)
           response
         end
 

@@ -12,9 +12,7 @@ module Fakturoid
 
       def perform_request(method, path, params)
         check_access_token
-
-        # TODO: Should it fetch if it's nil in case of first call via client credentials flow?
-        fetch_access_token if Utils.empty?(client.config.access_token) || client.config.access_token_near_expiration?
+        fetch_access_token if client.config.credentials.access_token_near_expiration?
 
         retried = false
 
@@ -35,7 +33,7 @@ module Fakturoid
 
       def check_access_token
         raise ArgumentError, "OAuth access was not authorized by user" unless oauth.authorized?
-        return unless Utils.empty?(client.config.access_token)
+        return unless Utils.empty?(client.config.credentials.access_token)
 
         fetch_access_token
       end

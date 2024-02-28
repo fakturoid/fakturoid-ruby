@@ -7,13 +7,13 @@ module Fakturoid
 
       def initialize(response)
         @response = response
-        @body     = MultiJson.load(env.body) unless Utils.empty?(env.body)
+        @body     = MultiJson.load(response.env.body) unless Utils.empty?(response.env.body)
 
         handle_response
       end
 
       def status_code
-        env["status"]
+        response.env["status"]
       end
 
       def refresh_token
@@ -38,18 +38,10 @@ module Fakturoid
 
     private
 
-      def env
-        response.env
-      end
-
       def handle_response
         case status_code
-          when 400
-            raise error(OauthError, "OAuth request failed")
+          when 400 then raise error(OauthError, "OAuth request failed")
           when 401 then raise error(AuthenticationError, "OAuth authentication failed")
-          when 415 then raise error(ContentTypeError,    "Unsupported Content-Type")
-          when 429 then raise error(RateLimitError,      "Rate limit reached")
-          when 503 then raise error(ReadOnlySiteError,   "Fakturoid is in read only state")
           else
             raise error(ServerError, "Server error") if status_code >= 500
             raise error(ClientError, "Client error") if status_code >= 400

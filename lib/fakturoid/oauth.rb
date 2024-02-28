@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require_relative "oauth/credentials"
 require_relative "oauth/flow"
 require_relative "oauth/request"
 require_relative "oauth/token_response"

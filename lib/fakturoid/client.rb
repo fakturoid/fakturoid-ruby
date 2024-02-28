@@ -24,6 +24,14 @@ module Fakturoid
       config.account = account
     end
 
+    def credentials
+      config.credentials
+    end
+
+    def credentials=(values)
+      config.credentials = values
+    end
+
     def on_access_token_refresh(&block)
       config.access_token_refresh_callback = block
     end

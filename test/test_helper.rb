@@ -40,14 +40,13 @@ module Fakturoid
           c.oauth_flow = "client_credentials"
         end
 
-        response = OpenStruct.new(
-          access_token: "access",
-          token_type: "Bearer",
-          expires_at: Time.now.to_i + 2 * 3600 - 10
-        )
-        Fakturoid.client.config.update_oauth_tokens(response)
-
-        Fakturoid.client
+        Fakturoid.client.tap do |client|
+          client.credentials = {
+            access_token: "access",
+            token_type: "Bearer",
+            expires_at: Time.now.to_i + 2 * 3600
+          }
+        end
       end
     end
   end

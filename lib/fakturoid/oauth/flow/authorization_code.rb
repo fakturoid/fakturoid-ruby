@@ -20,31 +20,31 @@ module Fakturoid
           }
 
           response = perform_request(HTTP_POST, "token.json", payload: payload)
-          client.config.update_oauth_tokens(response)
+          client.config.credentials.update(response.body)
           response
         end
 
         def fetch_access_token
           payload = {
             grant_type: "refresh_token",
-            refresh_token: client.config.refresh_token
+            refresh_token: client.config.credentials.refresh_token
           }
 
           response = perform_request(HTTP_POST, "token.json", payload: payload)
-          client.config.update_oauth_tokens(response)
+          client.config.credentials.update(response.body)
           response
         end
 
         def revoke_access
           payload = {
-            refresh_token: client.config.refresh_token
+            token: client.config.credentials.refresh_token
           }
 
           perform_request(HTTP_POST, "revoke.json", payload: payload)
         end
 
         def authorized?
-          !Utils.empty?(client.config.refresh_token)
+          !Utils.empty?(client.config.credentials.refresh_token)
         end
       end
     end
