@@ -77,7 +77,7 @@ class Fakturoid::Api::InventoryItemTest < Fakturoid::TestCase
   should "archive" do
     mock_faraday_connection do |stub|
       response_data = { id: 1, name: "Chair", archived: true }
-      stub.post("inventory_items/1/archive.json") { |_env| [201, { content_type: "application/json" }, response_data.to_json] }
+      stub.post("inventory_items/1/archive.json") { |_env| [200, { content_type: "application/json" }, response_data.to_json] }
     end
 
     assert_equal 1, test_client.inventory_item.archive(1).id
@@ -86,7 +86,7 @@ class Fakturoid::Api::InventoryItemTest < Fakturoid::TestCase
   should "unarchive" do
     mock_faraday_connection do |stub|
       response_data = { id: 1, name: "Chair", archived: false }
-      stub.post("inventory_items/1/unarchive.json") { |_env| [201, { content_type: "application/json" }, response_data.to_json] }
+      stub.post("inventory_items/1/unarchive.json") { |_env| [200, { content_type: "application/json" }, response_data.to_json] }
     end
 
     assert_equal 1, test_client.inventory_item.unarchive(1).id
