@@ -11,11 +11,10 @@ module Fakturoid
         perform_request(HTTP_GET, "subjects.json", request_params: request_params)
       end
 
-      def search(query, params = {})
-        Utils.validate_search_query(query: query)
+      def search(params = {})
+        Utils.validate_search_query(query: params[:query])
 
-        request_params = Utils.permit_params(params, :page)
-        request_params[:query] = query
+        request_params = Utils.permit_params(params, :query, :page)
 
         perform_request(HTTP_GET, "subjects/search.json", request_params: request_params)
       end

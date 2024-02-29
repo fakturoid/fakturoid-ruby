@@ -14,13 +14,9 @@ module Fakturoid
       end
 
       def search(params = {})
-        query = params.delete(:query)
-        tags  = params.delete(:tags)
+        Utils.validate_search_query(query: params[:query], tags: params[:tags], allow_tags: true)
 
-        Utils.validate_search_query(query: query, tags: tags, allow_tags: true)
-
-        request_params = Utils.permit_params(params, :page)
-        request_params[:query] = query
+        request_params = Utils.permit_params(params, :query, :tags, :page)
 
         perform_request(HTTP_GET, "invoices/search.json", request_params: request_params)
       end
