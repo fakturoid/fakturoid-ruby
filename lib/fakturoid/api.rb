@@ -16,6 +16,7 @@ require_relative "api/invoice"
 require_relative "api/invoice_message"
 require_relative "api/invoice_payment"
 require_relative "api/number_format"
+require_relative "api/recurring_generator"
 require_relative "api/subject"
 require_relative "api/todo"
 require_relative "api/user"
@@ -72,6 +73,10 @@ module Fakturoid
 
     def number_format
       @number_format ||= NumberFormat.new(self)
+    end
+
+    def recurring_generator
+      @recurring_generator ||= RecurringGenerator.new(self)
     end
 
     def subject
