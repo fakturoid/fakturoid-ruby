@@ -35,6 +35,8 @@ class Fakturoid::Api::InvoiceTest < Fakturoid::TestCase
       stub.get("invoices/1/download.pdf") { |_env| [200, { content_type: "application/pdf" }, load_fixture("invoice.pdf")] }
     end
 
-    assert 35_438, test_client.invoice.download_pdf(1).body.size
+    response = test_client.invoice.download_pdf(1)
+    assert !response.json?
+    assert 35_438, response.body.size
   end
 end
