@@ -5,22 +5,12 @@ module Fakturoid
     class Generator
       include Common::Base
 
+      INDEX_PARAMS = [:since, :updated_since, :page, :subject_id].freeze
+
       def all(params = {})
-        request_params = Utils.permit_params(params, :page, :since, :updated_since, :subject_id) || {}
+        request_params = Utils.permit_params(params, *INDEX_PARAMS) || {}
 
         perform_request(HTTP_GET, "generators.json", request_params: request_params)
-      end
-
-      def recurring(params = {})
-        request_params = Utils.permit_params(params, :page, :since, :updated_since, :subject_id) || {}
-
-        perform_request(HTTP_GET, "generators/recurring.json", request_params: request_params)
-      end
-
-      def template(params = {})
-        request_params = Utils.permit_params(params, :page, :since, :updated_since, :subject_id) || {}
-
-        perform_request(HTTP_GET, "generators/template.json", request_params: request_params)
       end
 
       def find(id)
