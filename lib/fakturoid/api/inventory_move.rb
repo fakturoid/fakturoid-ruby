@@ -5,8 +5,10 @@ module Fakturoid
     class InventoryMove
       include Common::Base
 
+      INDEX_PARAMS = [:since, :until, :updated_since, :updated_until, :page, :inventory_item_id].freeze
+
       def all(params = {})
-        request_params = Utils.permit_params(params, :page, :since, :updated_since, :inventory_item_id) || {}
+        request_params = Utils.permit_params(params, *INDEX_PARAMS) || {}
 
         perform_request(HTTP_GET, "inventory_moves.json", request_params: request_params)
       end
