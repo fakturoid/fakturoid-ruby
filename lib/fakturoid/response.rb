@@ -23,11 +23,11 @@ module Fakturoid
     end
 
     def json?
-      headers["Content-Type"] == "application/json"
+      headers["content-type"] =~ %r{\Aapplication/json}
     end
 
     def headers
-      response.env.response_headers
+      response.env.response_headers.transform_keys(&:downcase)
     end
 
     def inspect
