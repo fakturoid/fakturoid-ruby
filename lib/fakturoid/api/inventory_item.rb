@@ -5,7 +5,7 @@ module Fakturoid
     class InventoryItem
       include Common::Base
 
-      INDEX_PARAMS = [:page, :since, :updated_since, :article_number, :sku].freeze
+      INDEX_PARAMS = [:since, :until, :updated_since, :updated_until, :page, :article_number, :sku].freeze
 
       def all(params = {})
         request_params = Utils.permit_params(params, *INDEX_PARAMS) || {}
@@ -19,28 +19,23 @@ module Fakturoid
         perform_request(HTTP_GET, "inventory_items/archived.json", request_params: request_params)
       end
 
-      def find(id)
-        Utils.validate_numerical_id(id)
-        perform_request(HTTP_GET, "inventory_items/#{id}.json")
+      def low_quantity(params = {})
+        request_params = Utils.permit_params(params, *INDEX_PARAMS) || {}
+
+        perform_request(HTTP_GET, "inventory_items/low_quantity.json", request_params: request_params)
       end
 
-      def search(query, params = {})
-        Utils.validate_search_query(query: query)
+      def search(params = {})
+        Utils.validate_search_query(query: params[:query])
 
-        request_params = Utils.permit_params(params, :page)
-        request_params[:query] = query
+        request_params = Utils.permit_params(params, :query, :page)
 
         perform_request(HTTP_GET, "inventory_items/search.json", request_params: request_params)
       end
 
-      def archive(id)
+      def find(id)
         Utils.validate_numerical_id(id)
-        perform_request(HTTP_POST, "inventory_items/#{id}/archive.json")
-      end
-
-      def unarchive(id)
-        Utils.validate_numerical_id(id)
-        perform_request(HTTP_POST, "inventory_items/#{id}/unarchive.json")
+        perform_request(HTTP_GET, "inventory_items/#{id}.json")
       end
 
       def create(payload = {})
@@ -55,6 +50,16 @@ module Fakturoid
       def delete(id)
         Utils.validate_numerical_id(id)
         perform_request(HTTP_DELETE, "inventory_items/#{id}.json")
+      end
+
+      def archive(id)
+        Utils.validate_numerical_id(id)
+        perform_request(HTTP_POST, "inventory_items/#{id}/archive.json")
+      end
+
+      def unarchive(id)
+        Utils.validate_numerical_id(id)
+        perform_request(HTTP_POST, "inventory_items/#{id}/unarchive.json")
       end
     end
   end
