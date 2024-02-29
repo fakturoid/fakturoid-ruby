@@ -17,9 +17,7 @@ module Fakturoid
         retried = false
 
         begin
-          Request::Api.new(method, path, client).call(params).tap do
-            client.call_access_token_refresh_callback
-          end
+          Request::Api.new(method, path, client).call(params)
         rescue AuthenticationError
           raise if retried
           retried = true
@@ -39,7 +37,9 @@ module Fakturoid
       end
 
       def fetch_access_token
-        oauth.fetch_access_token
+        oauth.fetch_access_token.tap do
+          client.call_access_token_refresh_callback
+        end
       end
     end
   end
