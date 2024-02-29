@@ -3,7 +3,7 @@
 require "test_helper"
 
 class Fakturoid::Api::UserTest < Fakturoid::TestCase
-  should "should get current" do
+  should "get current" do
     mock_faraday_connection do |stub|
       response_data = { id: 5, full_name: "Alexandr Hejsek" }
       stub.get("user.json") { |_env| [200, { content_type: "application/json" }, response_data.to_json] }
@@ -12,7 +12,7 @@ class Fakturoid::Api::UserTest < Fakturoid::TestCase
     assert 5, test_client.user.current.id
   end
 
-  should "should get all" do
+  should "get all" do
     mock_faraday_connection do |stub|
       response_data = [{ id: 5, full_name: "Alexandr Hejsek" }]
       stub.get("users.json") { |_env| [200, { content_type: "application/json" }, response_data.to_json] }

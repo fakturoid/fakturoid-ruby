@@ -10,7 +10,7 @@ class Fakturoid::ResponseTest < Fakturoid::TestCase
     end
   end
 
-  should "should return json invoice" do
+  should "return json invoice" do
     test_connection = mock_faraday_connection do |stub|
       stub.get("invoices/5.json") { |_env| [200, { content_type: "application/json" }, load_fixture("invoice.json")] }
     end
