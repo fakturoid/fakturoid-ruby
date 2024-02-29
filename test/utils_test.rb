@@ -17,8 +17,8 @@ class Fakturoid::UtilsTest < Fakturoid::TestCase
   end
 
   should "raise argument error if search query is not given" do
-    assert_raises(ArgumentError) { Fakturoid::Utils.validate_search_query(nil) }
-    assert_raises(ArgumentError) { Fakturoid::Utils.validate_search_query("") }
-    assert Fakturoid::Utils.validate_search_query("Company name")
+    assert_raises(ArgumentError) { Fakturoid::Utils.validate_search_query(query: nil) }
+    assert_raises(ArgumentError) { Fakturoid::Utils.validate_search_query(query: "") }
+    assert Fakturoid::Utils.validate_search_query(query: "Company name")
   end
 end

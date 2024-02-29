@@ -23,7 +23,7 @@ module Fakturoid
     end
 
     def json?
-      response.env.request_headers["Content-Type"] == "application/json"
+      headers["Content-Type"] == "application/json"
     end
 
     def headers

@@ -9,7 +9,7 @@ class Fakturoid::Api::SubjectTest < Fakturoid::TestCase
       stub.get("subjects.json") { |_env| [200, { content_type: "application/json" }, response_data.to_json] }
     end
 
-    assert 1, test_client.subject.all.body.size
+    assert_equal 1, test_client.subject.all.body.size
   end
 
   should "search" do
@@ -18,7 +18,7 @@ class Fakturoid::Api::SubjectTest < Fakturoid::TestCase
       stub.get("subjects/search.json") { |_env| [200, { content_type: "application/json" }, response_data.to_json] }
     end
 
-    assert 1, test_client.subject.search("Apple").body.size
+    assert_equal 1, test_client.subject.search(query: "Apple").body.size
   end
 
   should "get detail" do
@@ -27,7 +27,7 @@ class Fakturoid::Api::SubjectTest < Fakturoid::TestCase
       stub.get("subjects/1.json") { |_env| [200, { content_type: "application/json" }, response_data.to_json] }
     end
 
-    assert 1, test_client.subject.find(1).body.size
+    assert_equal 1, test_client.subject.find(1).id
   end
 
   should "create new record" do
@@ -36,7 +36,7 @@ class Fakturoid::Api::SubjectTest < Fakturoid::TestCase
       stub.post("subjects.json") { |_env| [201, { content_type: "application/json" }, response_data.to_json] }
     end
 
-    assert 1, test_client.subject.create(name: "Apple Czech s.r.o.").id
+    assert_equal 1, test_client.subject.create(name: "Apple Czech s.r.o.").id
   end
 
   should "update record" do
@@ -45,7 +45,7 @@ class Fakturoid::Api::SubjectTest < Fakturoid::TestCase
       stub.patch("subjects/1.json") { |_env| [200, { content_type: "application/json" }, response_data.to_json] }
     end
 
-    assert 1, test_client.subject.update(1, name: "Google Czech Republic s.r.o.").id
+    assert_equal 1, test_client.subject.update(1, name: "Google Czech Republic s.r.o.").id
   end
 
   should "delete record" do
@@ -53,6 +53,6 @@ class Fakturoid::Api::SubjectTest < Fakturoid::TestCase
       stub.delete("subjects/1.json") { |_env| [204, {}, ""] }
     end
 
-    test_client.subject.delete(1)
+    assert_equal 204, test_client.subject.delete(1).status_code
   end
 end

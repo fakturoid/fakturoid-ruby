@@ -9,6 +9,6 @@ class Fakturoid::Api::AccountTest < Fakturoid::TestCase
       stub.get("account.json") { |_env| [200, { content_type: "application/json" }, response_data.to_json] }
     end
 
-    assert "applecorp", test_client.account.current.subdomain
+    assert_equal "applecorp", test_client.account.current.subdomain
   end
 end
