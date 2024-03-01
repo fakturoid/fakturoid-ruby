@@ -39,6 +39,16 @@ class Fakturoid::Api::ExpenseTest < Fakturoid::TestCase
     assert_equal 1, test_client.expense.find(1).id
   end
 
+  should "download attachment" do
+    mock_faraday_connection(headers: { content_type: "application/pdf" }) do |stub|
+      stub.get("expenses/1/attachments/2/download") { |_env| [200, { content_type: "application/pdf" }, load_fixture("invoice.pdf")] }
+    end
+
+    response = test_client.expense.download_attachment(1, 2)
+    assert !response.json?
+    assert_equal 35_438, response.body.size
+  end
+
   should "fire action" do
     mock_faraday_connection do |stub|
       stub.post("expenses/1/fire.json?event=lock") { |_env| [204, {}, ""] }

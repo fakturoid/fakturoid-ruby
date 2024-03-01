@@ -11,17 +11,23 @@ module Fakturoid
         perform_request(HTTP_GET, "expenses.json", request_params: request_params)
       end
 
-      def find(id)
-        Utils.validate_numerical_id(id)
-        perform_request(HTTP_GET, "expenses/#{id}.json")
-      end
-
       def search(params = {})
         Utils.validate_search_query(query: params[:query], tags: params[:tags], allow_tags: true)
 
         request_params = Utils.permit_params(params, :query, :tags, :page)
 
         perform_request(HTTP_GET, "expenses/search.json", request_params: request_params)
+      end
+
+      def find(id)
+        Utils.validate_numerical_id(id)
+        perform_request(HTTP_GET, "expenses/#{id}.json")
+      end
+
+      def download_attachment(expense_id, id)
+        Utils.validate_numerical_id(expense_id)
+        Utils.validate_numerical_id(id)
+        perform_request(HTTP_GET, "expenses/#{expense_id}/attachments/#{id}/download")
       end
 
       def fire(id, event)
