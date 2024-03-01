@@ -21,6 +21,7 @@ module Fakturoid
 
           response = perform_request(HTTP_POST, "token.json", payload: payload)
           client.config.credentials.update(response.body)
+          client.call_access_token_refresh_callback
           response
         end
 
