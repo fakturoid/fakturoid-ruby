@@ -8,32 +8,16 @@ require_relative "oauth/access_token_service"
 
 module Fakturoid
   class Oauth
+    extend Forwardable
+
     attr_reader :client, :flow, :access_token_service
+
+    def_delegators :@flow, :authorize, :fetch_access_token, :revoke_access, :authorized?
 
     def initialize(client)
       @client = client
       @flow = find_flow
       @access_token_service = AccessTokenService.new(self)
-    end
-
-    def authorization_uri(state: nil)
-      flow.authorization_uri(state: state)
-    end
-
-    def authorize(code:)
-      flow.authorize(code: code)
-    end
-
-    def fetch_access_token
-      flow.fetch_access_token
-    end
-
-    def revoke_access
-      flow.revoke_access
-    end
-
-    def authorized?
-      flow.authorized?
     end
 
     def perform_request(method, path, params)

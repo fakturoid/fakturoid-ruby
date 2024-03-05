@@ -2,9 +2,13 @@
 
 module Fakturoid
   class Client
+    extend Forwardable
     include Api
 
     attr_reader :config
+
+    # Authorization methods
+    def_delegators :@oauth, :authorization_uri, :authorize, :revoke_access, :perform_request
 
     def self.configure(&block)
       @config ||= Fakturoid::Config.new(&block) # rubocop:disable  Naming/MemoizedInstanceVariableName
@@ -18,6 +22,7 @@ module Fakturoid
       raise ConfigurationError, "Configuration is missing" if self.class.config.nil?
 
       @config = self.class.config.duplicate(config)
+      @oauth  = Oauth.new(self)
     end
 
     def account=(account)
@@ -38,30 +43,6 @@ module Fakturoid
 
     def call_access_token_refresh_callback
       config.access_token_refresh_callback&.call(config.credentials)
-    end
-
-    # Authorization methods
-
-    def authorization_uri(state: nil)
-      oauth.authorization_uri(state: state)
-    end
-
-    def authorize(code:)
-      oauth.authorize(code: code)
-    end
-
-    def revoke_access
-      oauth.revoke_access
-    end
-
-    def perform_request(method, path, params)
-      oauth.perform_request(method, path, params)
-    end
-
-  private
-
-    def oauth
-      @oauth ||= Oauth.new(self)
     end
   end
 end
