@@ -3,7 +3,7 @@
 module Fakturoid
   module Api
     class Event
-      include Common::Base
+      include Base
 
       INDEX_PARAMS = [:page, :since, :subject_id].freeze
 

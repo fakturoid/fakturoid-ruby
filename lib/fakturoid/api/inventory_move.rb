@@ -3,7 +3,7 @@
 module Fakturoid
   module Api
     class InventoryMove
-      include Common::Base
+      include Base
 
       INDEX_PARAMS = [:since, :until, :updated_since, :updated_until, :page, :inventory_item_id].freeze
 

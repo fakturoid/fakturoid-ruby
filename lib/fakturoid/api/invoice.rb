@@ -3,7 +3,7 @@
 module Fakturoid
   module Api
     class Invoice
-      include Common::Base
+      include Base
 
       INDEX_PARAMS = [:since, :until, :updated_since, :updated_until, :page, :subject_id, :custom_id, :number, :status, :document_type].freeze
 

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "api/common"
+require_relative "api/base"
 
 # Sorted alphabetically
 require_relative "api/account"

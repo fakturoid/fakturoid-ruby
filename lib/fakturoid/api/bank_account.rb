@@ -3,7 +3,7 @@
 module Fakturoid
   module Api
     class BankAccount
-      include Common::Base
+      include Base
 
       def all
         perform_request(HTTP_GET, "bank_accounts.json")

@@ -3,7 +3,7 @@
 module Fakturoid
   module Api
     class User
-      include Common::Base
+      include Base
 
       def current
         perform_request(HTTP_GET, "user.json", url: client.config.api_endpoint_without_account)

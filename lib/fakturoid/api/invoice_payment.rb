@@ -3,7 +3,7 @@
 module Fakturoid
   module Api
     class InvoicePayment
-      include Common::Base
+      include Base
 
       def create(invoice_id, payload = {})
         Utils.validate_numerical_id(invoice_id)

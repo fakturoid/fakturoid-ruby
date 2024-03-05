@@ -3,7 +3,7 @@
 module Fakturoid
   module Api
     class Generator
-      include Common::Base
+      include Base
 
       INDEX_PARAMS = [:since, :updated_since, :page, :subject_id].freeze
 

@@ -3,7 +3,7 @@
 module Fakturoid
   module Api
     class Subject
-      include Common::Base
+      include Base
 
       def all(params = {})
         request_params = Utils.permit_params(params, :since, :updated_since, :page, :custom_id) || {}

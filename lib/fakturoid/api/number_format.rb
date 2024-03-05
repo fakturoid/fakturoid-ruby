@@ -3,7 +3,7 @@
 module Fakturoid
   module Api
     class NumberFormat
-      include Common::Base
+      include Base
 
       def invoices
         perform_request(HTTP_GET, "number_formats/invoices.json")
