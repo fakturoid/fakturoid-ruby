@@ -515,7 +515,7 @@ Update an inventory item:
 response = client.inventory_item.update(inventory_item_id, name: "Another name")
 ```
 
-To delete an inventory item:
+Delete an inventory item:
 
 ```ruby
 response = client.inventory_item.delete(inventory_item_id)
@@ -677,13 +677,13 @@ data = {
 response = client.recurring_generator.create(data)
 ```
 
-Update a recurring_generator:
+Update a recurring generator:
 
 ```ruby
 response = client.recurring_generator.update(recurring_generator_id, name: "Another name")
 ```
 
-Delete a recurring_generator:
+Delete a recurring generator:
 
 ```ruby
 response = client.recurring_generator.delete(recurring_generator_id)
