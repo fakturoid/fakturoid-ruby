@@ -8,6 +8,13 @@ require "fakturoid"
 
 module Fakturoid
   class TestCase < Minitest::Test
+    # Clean up global state.
+    def teardown
+      Fakturoid.instance_variable_set(:@client, nil)
+      Fakturoid::Client.instance_variable_set(:@config, nil)
+      Fakturoid::Client.instance_variable_set(:@oauth, nil)
+    end
+
     def test_path
       Pathname.new(File.dirname(__FILE__))
     end
@@ -31,13 +38,13 @@ module Fakturoid
 
     def test_client
       @test_client ||= begin
-        Fakturoid.configure do |c|
-          c.email = "test@email.cz"
-          c.account = "testaccount"
-          c.user_agent = "My test app (test@email.cz)"
-          c.client_id = "XXX"
-          c.client_secret = "YYY"
-          c.oauth_flow = "client_credentials"
+        Fakturoid.configure do |config|
+          config.email         = "test@email.cz"
+          config.account       = "testaccount"
+          config.user_agent    = "My test app (test@email.cz)"
+          config.client_id     = "XXX"
+          config.client_secret = "YYY"
+          config.oauth_flow    = "client_credentials"
         end
 
         Fakturoid.client.tap do |client|
