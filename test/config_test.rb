@@ -60,7 +60,7 @@ class Fakturoid::ConfigTest < Fakturoid::TestCase
       access_token: "access",
       refresh_token: "refresh",
       token_type: "Bearer",
-      expires_at: Time.now.to_i + 2 * 3600
+      expires_at: Time.now + 2 * 3600
     }
 
     assert_equal URI.parse("https://app.fakturoid.cz/api/v3/oauth?client_id=XXX&redirect_uri=http%3A%2F%2Fexample.org%2Fredirect&response_type=code"), config.authorization_uri

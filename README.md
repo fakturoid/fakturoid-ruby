@@ -82,7 +82,7 @@ Credentials can also be set manually (eg. loaded from a database):
 client.credentials = {
   access_token: "1db22484a6d6256e7942158d216157d075ab6e7b583bd16416181ca6c4ac180167acd8d599bd123d", # Example
   refresh_token: "5682a4bc6254d85934a03931ed5e235e0f81bca64aef054fa0049d8c953eab919ba67bd8ceb532d7",
-  expires_at: "2024-03-01T12:42:40+01:00", # This also accepts `DateTime` object.
+  expires_at: "2024-03-01T12:42:40+01:00", # This also accepts `Time` or `DateTime` object.
   token_type: "Bearer"
 }
 ```

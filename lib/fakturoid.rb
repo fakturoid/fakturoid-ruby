@@ -2,6 +2,7 @@
 
 require "uri"
 require "forwardable"
+require "time"
 require "multi_json"
 require "faraday"
 

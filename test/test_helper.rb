@@ -51,7 +51,7 @@ module Fakturoid
           client.credentials = {
             access_token: "access",
             token_type: "Bearer",
-            expires_at: Time.now.to_i + 2 * 3600
+            expires_at: Time.now + 2 * 3600
           }
         end
       end
