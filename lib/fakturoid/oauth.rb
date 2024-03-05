@@ -12,7 +12,7 @@ module Fakturoid
 
     attr_reader :client, :flow, :access_token_service
 
-    def_delegators :@flow, :authorize, :fetch_access_token, :revoke_access, :authorized?
+    def_delegators :@flow, :authorization_uri, :authorize, :fetch_access_token, :revoke_access, :authorized?
 
     def initialize(client)
       @client = client
