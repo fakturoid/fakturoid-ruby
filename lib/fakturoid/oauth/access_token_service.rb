@@ -12,7 +12,7 @@ module Fakturoid
 
       def perform_request(method, path, params)
         check_access_token
-        fetch_access_token if client.config.credentials.access_token_near_expiration?
+        fetch_access_token if client.config.credentials.access_token_expired?
 
         retried = false
 

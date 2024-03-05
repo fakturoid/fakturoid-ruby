@@ -30,7 +30,7 @@ module Fakturoid
         self.expires_at = value
       end
 
-      def access_token_near_expiration?
+      def access_token_expired?
         Time.now > (expires_at - EXPIRY_BUFFER_IN_SECONDS)
       end
 
