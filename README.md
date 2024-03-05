@@ -170,7 +170,7 @@ response = client.account.current
 Get a list of bank accounts for current account:
 
 ```ruby
-response = client.bank_accounts.invoices
+response = client.bank_account.all
 ```
 
 ### [Number Format Resource](https://www.fakturoid.cz/api/v3/number-formats)
