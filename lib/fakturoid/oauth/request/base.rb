@@ -7,6 +7,7 @@ module Fakturoid
         attr_reader :method, :path, :client
 
         HTTP_METHODS = [:get, :post, :patch, :delete].freeze
+        REQUEST_TIMEOUT = 10
 
         def initialize(method, path, client)
           @method = method
@@ -36,7 +37,10 @@ module Fakturoid
               accept: "application/json",
               user_agent: client.config.user_agent
             },
-            url: options[:url] || endpoint
+            url: options[:url] || endpoint,
+            request: {
+              timeout: REQUEST_TIMEOUT
+            }
           }
         end
 
