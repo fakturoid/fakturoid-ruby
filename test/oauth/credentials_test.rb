@@ -34,4 +34,15 @@ class Fakturoid::Oauth::CredentialsTest < Fakturoid::TestCase
     expires_at = Time.now.to_i + 2 * 3600
     assert_raises(ArgumentError) { Fakturoid::Oauth::Credentials.new(expires_at: expires_at) }
   end
+
+  should "appear expired if a couple of seconds before real expiry time" do
+    expires_at = Time.now + Fakturoid::Oauth::Credentials::EXPIRY_BUFFER_IN_SECONDS / 2
+    credentials = Fakturoid::Oauth::Credentials.new(expires_at: expires_at)
+    assert credentials.access_token_near_expiration?
+  end
+
+  should "be expired if in the past" do
+    credentials = Fakturoid::Oauth::Credentials.new(expires_at: Time.now - 5 * 60)
+    assert credentials.access_token_near_expiration?
+  end
 end
