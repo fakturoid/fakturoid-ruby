@@ -2,7 +2,7 @@
 
 module Fakturoid
   class Config
-    attr_accessor :email, :account, :client_id, :client_secret, :oauth_flow, :redirect_uri, :access_token_refresh_callback
+    attr_accessor :email, :account, :client_id, :client_secret, :oauth_flow, :redirect_uri, :credentials_updated_callback
     attr_writer :user_agent
 
     SUPPORTED_FLOWS = %w[authorization_code client_credentials].freeze

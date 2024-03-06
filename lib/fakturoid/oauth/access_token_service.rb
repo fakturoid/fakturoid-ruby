@@ -38,7 +38,7 @@ module Fakturoid
 
       def fetch_access_token
         oauth.fetch_access_token.tap do
-          client.call_access_token_refresh_callback
+          client.call_credentials_updated_callback
         end
       end
     end

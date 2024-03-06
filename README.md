@@ -90,7 +90,7 @@ client.credentials = {
 Don't forget to update your credentials after an access token refresh:
 
 ```ruby
-client.on_access_token_refresh do |credentials|
+client.credentials_updated_callback do |credentials|
   # Store new credentials into database.
   pp client.credentials.as_json
 end

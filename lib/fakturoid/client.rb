@@ -37,12 +37,12 @@ module Fakturoid
       config.credentials = values
     end
 
-    def on_access_token_refresh(&block)
-      config.access_token_refresh_callback = block
+    def credentials_updated_callback(&block)
+      config.credentials_updated_callback = block
     end
 
-    def call_access_token_refresh_callback
-      config.access_token_refresh_callback&.call(config.credentials)
+    def call_credentials_updated_callback
+      config.credentials_updated_callback&.call(config.credentials)
     end
   end
 end
