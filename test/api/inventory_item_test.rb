@@ -33,7 +33,8 @@ class Fakturoid::Api::InventoryItemTest < Fakturoid::TestCase
   should "search" do
     mock_faraday_connection do |stub|
       response_data = [{ id: 1, name: "Chair" }]
-      stub.get("inventory_items/search.json") { |_env| [200, { content_type: "application/json" }, response_data.to_json] }
+      stub.strict_mode = true
+      stub.get("inventory_items/search.json?query=Chair", content_type: "application/json") { |_env| [200, { content_type: "application/json" }, response_data.to_json] }
     end
 
     assert_equal 1, test_client.inventory_item.search(query: "Chair").body.size

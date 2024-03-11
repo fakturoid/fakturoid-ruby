@@ -15,7 +15,8 @@ class Fakturoid::Api::SubjectTest < Fakturoid::TestCase
   should "search" do
     mock_faraday_connection do |stub|
       response_data = [{ id: 1, name: "Apple Czech s.r.o." }]
-      stub.get("subjects/search.json") { |_env| [200, { content_type: "application/json" }, response_data.to_json] }
+      stub.strict_mode = true
+      stub.get("subjects/search.json?query=Apple", content_type: "application/json") { |_env| [200, { content_type: "application/json" }, response_data.to_json] }
     end
 
     assert_equal 1, test_client.subject.search(query: "Apple").body.size

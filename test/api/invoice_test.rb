@@ -15,7 +15,8 @@ class Fakturoid::Api::InvoiceTest < Fakturoid::TestCase
   should "search by query" do
     mock_faraday_connection do |stub|
       response_data = [{ id: 1, number: "2024-0001" }]
-      stub.get("invoices/search.json") { |_env| [200, { content_type: "application/json" }, response_data.to_json] }
+      stub.strict_mode = true
+      stub.get("invoices/search.json?query=2024-0001", content_type: "application/json") { |_env| [200, { content_type: "application/json" }, response_data.to_json] }
     end
 
     assert_equal 1, test_client.invoice.search(query: "2024-0001").body.size
@@ -24,7 +25,8 @@ class Fakturoid::Api::InvoiceTest < Fakturoid::TestCase
   should "search by tags" do
     mock_faraday_connection do |stub|
       response_data = [{ id: 1, number: "2024-0001" }]
-      stub.get("invoices/search.json") { |_env| [200, { content_type: "application/json" }, response_data.to_json] }
+      stub.strict_mode = true
+      stub.get("invoices/search.json?tags%5B%5D=Housing", content_type: "application/json") { |_env| [200, { content_type: "application/json" }, response_data.to_json] }
     end
 
     assert_equal 1, test_client.invoice.search(tags: ["Housing"]).body.size
