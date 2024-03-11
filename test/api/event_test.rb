@@ -15,9 +15,9 @@ class Fakturoid::Api::EventTest < Fakturoid::TestCase
   should "get paid" do
     mock_faraday_connection do |stub|
       response_data = [{ id: 1, name: "invoice_paid" }]
-      stub.get("events.json") { |_env| [200, { content_type: "application/json" }, response_data.to_json] }
+      stub.get("events/paid.json") { |_env| [200, { content_type: "application/json" }, response_data.to_json] }
     end
 
-    assert_equal 1, test_client.event.all.body.size
+    assert_equal 1, test_client.event.paid.body.size
   end
 end
