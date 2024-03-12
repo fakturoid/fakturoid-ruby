@@ -1,14 +1,48 @@
 # frozen_string_literal: true
 
-require "fakturoid/client/account"
-require "fakturoid/client/bank_account"
-require "fakturoid/client/number_format"
-require "fakturoid/client/user"
-require "fakturoid/client/subject"
-require "fakturoid/client/invoice"
-require "fakturoid/client/inventory_items"
-require "fakturoid/client/inventory_moves"
-require "fakturoid/client/expense"
-require "fakturoid/client/generator"
-require "fakturoid/client/event"
-require "fakturoid/client/todo"
+module Fakturoid
+  class Client
+    extend Forwardable
+    include Api
+
+    attr_reader :config
+
+    # Authorization methods
+    def_delegators :@oauth, :authorization_uri, :authorize, :revoke_access, :perform_request
+
+    def self.configure(&block)
+      @config ||= Fakturoid::Config.new(&block) # rubocop:disable  Naming/MemoizedInstanceVariableName
+    end
+
+    def self.config
+      @config
+    end
+
+    def initialize(config = {})
+      raise ConfigurationError, "Configuration is missing" if self.class.config.nil?
+
+      @config = self.class.config.duplicate(config)
+      @oauth  = Oauth.new(self)
+    end
+
+    def account=(account)
+      config.account = account
+    end
+
+    def credentials
+      config.credentials
+    end
+
+    def credentials=(values)
+      config.credentials = values
+    end
+
+    def credentials_updated_callback(&block)
+      config.credentials_updated_callback = block
+    end
+
+    def call_credentials_updated_callback
+      config.credentials_updated_callback&.call(config.credentials)
+    end
+  end
+end

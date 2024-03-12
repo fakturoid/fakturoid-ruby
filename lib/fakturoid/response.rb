@@ -2,30 +2,32 @@
 
 module Fakturoid
   class Response
-    attr_reader :response, :caller, :env, :body, :request_method
+    attr_reader :response, :caller, :body, :request_method
 
     def initialize(faraday_response, caller, request_method)
       @response = faraday_response
       @caller = caller
-      @env = faraday_response.env
       @request_method = request_method.to_sym
+
+      env = response.env
 
       if !(env.body.nil? || env.body.empty? || (json? && env.body =~ /\A\s+\z/))
         @body = json? ? MultiJson.load(env.body) : env.body
       end
+
       handle_response
     end
 
     def status_code
-      env["status"]
+      response.env["status"]
     end
 
     def json?
-      env.request_headers["Content-Type"] == "application/json"
+      headers["content-type"] =~ %r{\Aapplication/json}
     end
 
     def headers
-      env.response_headers
+      response.env.response_headers.transform_keys(&:downcase)
     end
 
     def inspect
@@ -36,21 +38,7 @@ module Fakturoid
 
     def handle_response
       case status_code
-        when 400
-          raise error(UserAgentError,  "User-Agent header missing") if env.request_headers["User-Agent"].nil? || env.request_headers["User-Agent"].empty?
-          raise error(PaginationError, "Page does not exist")
-        when 401 then raise error(AuthenticationError, "Authentification failed")
-        when 402 then raise error(BlockedAccountError, "Account is blocked")
-        when 403
-          raise error(DestroySubjectError, "Cannot destroy subject with invoices")          if caller == Client::Subject && request_method == :delete
-          raise error(SubjectLimitError,   "Subject limit for account reached")             if caller == Client::Subject && request_method == :post
-          raise error(GeneratorLimitError, "Recurring generator limit for account reached") if caller == Client::Generator
-          raise error(UnsupportedFeatureError, "Feature unavailable for account plan")
-        when 404 then raise error(RecordNotFoundError, "Record not found")
-        when 415 then raise error(ContentTypeError,    "Unsupported Content-Type")
-        when 422 then raise error(InvalidRecordError,  "Invalid record")
-        when 429 then raise error(RateLimitError,      "Rate limit reached")
-        when 503 then raise error(ReadOnlySiteError,   "Fakturoid is in read only state")
+        when 401 then raise error(AuthenticationError, "Authentication failed")
         else
           raise error(ServerError, "Server error") if status_code >= 500
           raise error(ClientError, "Client error") if status_code >= 400
