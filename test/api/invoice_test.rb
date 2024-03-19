@@ -9,7 +9,7 @@ class Fakturoid::Api::InvoiceTest < Fakturoid::TestCase
       stub.get("invoices.json") { |_env| [200, { content_type: "application/json" }, response_data.to_json] }
     end
 
-    assert_equal 1, test_client.invoice.all.body.size
+    assert_equal 1, test_client.invoices.all.body.size
   end
 
   should "search by query" do
@@ -19,7 +19,7 @@ class Fakturoid::Api::InvoiceTest < Fakturoid::TestCase
       stub.get("invoices/search.json?query=2024-0001", content_type: "application/json") { |_env| [200, { content_type: "application/json" }, response_data.to_json] }
     end
 
-    assert_equal 1, test_client.invoice.search(query: "2024-0001").body.size
+    assert_equal 1, test_client.invoices.search(query: "2024-0001").body.size
   end
 
   should "search by tags" do
@@ -29,7 +29,7 @@ class Fakturoid::Api::InvoiceTest < Fakturoid::TestCase
       stub.get("invoices/search.json?tags%5B%5D=Housing", content_type: "application/json") { |_env| [200, { content_type: "application/json" }, response_data.to_json] }
     end
 
-    assert_equal 1, test_client.invoice.search(tags: ["Housing"]).body.size
+    assert_equal 1, test_client.invoices.search(tags: ["Housing"]).body.size
   end
 
   should "get detail" do
@@ -38,7 +38,7 @@ class Fakturoid::Api::InvoiceTest < Fakturoid::TestCase
       stub.get("invoices/1.json") { |_env| [200, { content_type: "application/json" }, response_data.to_json] }
     end
 
-    assert_equal 1, test_client.invoice.find(1).id
+    assert_equal 1, test_client.invoices.find(1).id
   end
 
   should "download pdf" do
@@ -46,7 +46,7 @@ class Fakturoid::Api::InvoiceTest < Fakturoid::TestCase
       stub.get("invoices/1/download.pdf") { |_env| [200, { content_type: "application/pdf" }, load_fixture("invoice.pdf")] }
     end
 
-    response = test_client.invoice.download_pdf(1)
+    response = test_client.invoices.download_pdf(1)
     assert !response.json?
     assert_equal 35_438, response.body.size
   end
@@ -56,7 +56,7 @@ class Fakturoid::Api::InvoiceTest < Fakturoid::TestCase
       stub.get("invoices/1/attachments/2/download") { |_env| [200, { content_type: "application/pdf" }, load_fixture("invoice.pdf")] }
     end
 
-    response = test_client.invoice.download_attachment(1, 2)
+    response = test_client.invoices.download_attachment(1, 2)
     assert !response.json?
     assert_equal 35_438, response.body.size
   end
@@ -66,7 +66,7 @@ class Fakturoid::Api::InvoiceTest < Fakturoid::TestCase
       stub.post("invoices/1/fire.json?event=lock") { |_env| [204, {}, ""] }
     end
 
-    assert_equal 204, test_client.invoice.fire(1, "lock").status_code
+    assert_equal 204, test_client.invoices.fire(1, "lock").status_code
   end
 
   should "create new record" do
@@ -75,7 +75,7 @@ class Fakturoid::Api::InvoiceTest < Fakturoid::TestCase
       stub.post("invoices.json") { |_env| [201, { content_type: "application/json" }, response_data.to_json] }
     end
 
-    assert_equal 1, test_client.invoice.create(subject_id: 1, lines: [{ name: "Workshop", unit_price: 1000, vat_rate: 21 }]).id
+    assert_equal 1, test_client.invoices.create(subject_id: 1, lines: [{ name: "Workshop", unit_price: 1000, vat_rate: 21 }]).id
   end
 
   should "update record" do
@@ -84,7 +84,7 @@ class Fakturoid::Api::InvoiceTest < Fakturoid::TestCase
       stub.patch("invoices/1.json") { |_env| [200, { content_type: "application/json" }, response_data.to_json] }
     end
 
-    assert_equal 1, test_client.invoice.update(1, lines: [{ id: 1236, name: "Workshop 2" }]).id
+    assert_equal 1, test_client.invoices.update(1, lines: [{ id: 1236, name: "Workshop 2" }]).id
   end
 
   should "delete record" do
@@ -92,6 +92,6 @@ class Fakturoid::Api::InvoiceTest < Fakturoid::TestCase
       stub.delete("invoices/1.json") { |_env| [204, {}, ""] }
     end
 
-    assert_equal 204, test_client.invoice.delete(1).status_code
+    assert_equal 204, test_client.invoices.delete(1).status_code
   end
 end

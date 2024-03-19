@@ -9,7 +9,7 @@ class Fakturoid::Api::TodoTest < Fakturoid::TestCase
       stub.get("todos.json") { |_env| [200, { content_type: "application/json" }, response_data.to_json] }
     end
 
-    assert_equal 1, test_client.todo.all.body.size
+    assert_equal 1, test_client.todos.all.body.size
   end
 
   should "toggle completion" do
@@ -18,6 +18,6 @@ class Fakturoid::Api::TodoTest < Fakturoid::TestCase
       stub.post("todos/1/toggle_completion.json") { |_env| [200, { content_type: "application/json" }, response_data.to_json] }
     end
 
-    assert_equal 1, test_client.todo.toggle_completion(1).id
+    assert_equal 1, test_client.todos.toggle_completion(1).id
   end
 end

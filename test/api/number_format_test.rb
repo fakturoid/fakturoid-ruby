@@ -9,6 +9,6 @@ class Fakturoid::Api::NumberFormatTest < Fakturoid::TestCase
       stub.get("number_formats/invoices.json") { |_env| [200, { content_type: "application/json" }, response_data.to_json] }
     end
 
-    assert_equal 1, test_client.number_format.invoices.body.size
+    assert_equal 1, test_client.number_formats.invoices.body.size
   end
 end

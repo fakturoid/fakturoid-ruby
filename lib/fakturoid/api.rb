@@ -27,68 +27,68 @@ module Fakturoid
       @account ||= Account.new(self)
     end
 
-    def bank_account
-      @bank_account ||= BankAccount.new(self)
+    def bank_accounts
+      @bank_accounts ||= BankAccount.new(self)
     end
 
-    def event
-      @event ||= Event.new(self)
+    def events
+      @events ||= Event.new(self)
     end
 
-    def expense
-      @expense ||= Expense.new(self)
+    def expenses
+      @expenses ||= Expense.new(self)
     end
 
-    def expense_payment
-      @expense_payment ||= ExpensePayment.new(self)
+    def expense_payments
+      @expense_payments ||= ExpensePayment.new(self)
     end
 
-    def generator
-      @generator ||= Generator.new(self)
+    def generators
+      @generators ||= Generator.new(self)
     end
 
-    def inbox_file
-      @inbox_file ||= InboxFile.new(self)
+    def inbox_files
+      @inbox_files ||= InboxFile.new(self)
     end
 
-    def inventory_item
-      @inventory_item ||= InventoryItem.new(self)
+    def inventory_items
+      @inventory_items ||= InventoryItem.new(self)
     end
 
-    def inventory_move
-      @inventory_move ||= InventoryMove.new(self)
+    def inventory_moves
+      @inventory_moves ||= InventoryMove.new(self)
     end
 
-    def invoice
-      @invoice ||= Invoice.new(self)
+    def invoices
+      @invoices ||= Invoice.new(self)
     end
 
-    def invoice_message
-      @invoice_message ||= InvoiceMessage.new(self)
+    def invoice_messages
+      @invoice_messages ||= InvoiceMessage.new(self)
     end
 
-    def invoice_payment
-      @invoice_payment ||= InvoicePayment.new(self)
+    def invoice_payments
+      @invoice_payments ||= InvoicePayment.new(self)
     end
 
-    def number_format
-      @number_format ||= NumberFormat.new(self)
+    def number_formats
+      @number_formats ||= NumberFormat.new(self)
     end
 
-    def recurring_generator
-      @recurring_generator ||= RecurringGenerator.new(self)
+    def recurring_generators
+      @recurring_generators ||= RecurringGenerator.new(self)
     end
 
-    def subject
-      @subject ||= Subject.new(self)
+    def subjects
+      @subjects ||= Subject.new(self)
     end
 
-    def todo
-      @todo ||= Todo.new(self)
+    def todos
+      @todos ||= Todo.new(self)
     end
 
-    def user
-      @user ||= User.new(self)
+    def users
+      @users ||= User.new(self)
     end
   end
 end

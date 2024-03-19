@@ -9,6 +9,6 @@ class Fakturoid::Api::BankAccountTest < Fakturoid::TestCase
       stub.get("bank_accounts.json") { |_env| [200, { content_type: "application/json" }, response_data.to_json] }
     end
 
-    assert_equal 1, test_client.bank_account.all.body.size
+    assert_equal 1, test_client.bank_accounts.all.body.size
   end
 end

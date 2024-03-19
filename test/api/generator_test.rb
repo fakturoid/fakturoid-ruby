@@ -9,7 +9,7 @@ class Fakturoid::Api::GeneratorTest < Fakturoid::TestCase
       stub.get("generators.json") { |_env| [200, { content_type: "application/json" }, response_data.to_json] }
     end
 
-    assert_equal 1, test_client.generator.all.body.size
+    assert_equal 1, test_client.generators.all.body.size
   end
 
   should "get detail" do
@@ -18,7 +18,7 @@ class Fakturoid::Api::GeneratorTest < Fakturoid::TestCase
       stub.get("generators/1.json") { |_env| [200, { content_type: "application/json" }, response_data.to_json] }
     end
 
-    assert_equal 1, test_client.generator.find(1).id
+    assert_equal 1, test_client.generators.find(1).id
   end
 
   should "create new record" do
@@ -27,7 +27,7 @@ class Fakturoid::Api::GeneratorTest < Fakturoid::TestCase
       stub.post("generators.json") { |_env| [201, { content_type: "application/json" }, response_data.to_json] }
     end
 
-    assert_equal 1, test_client.generator.create(name: "Workshop", subject_id: 1, lines: [{ name: "Workshop", unit_price: 1000, vat_rate: 21 }]).id
+    assert_equal 1, test_client.generators.create(name: "Workshop", subject_id: 1, lines: [{ name: "Workshop", unit_price: 1000, vat_rate: 21 }]).id
   end
 
   should "update record" do
@@ -36,7 +36,7 @@ class Fakturoid::Api::GeneratorTest < Fakturoid::TestCase
       stub.patch("generators/1.json") { |_env| [200, { content_type: "application/json" }, response_data.to_json] }
     end
 
-    assert_equal 1, test_client.generator.update(1, name: "Longer workshop").id
+    assert_equal 1, test_client.generators.update(1, name: "Longer workshop").id
   end
 
   should "delete record" do
@@ -44,6 +44,6 @@ class Fakturoid::Api::GeneratorTest < Fakturoid::TestCase
       stub.delete("generators/1.json") { |_env| [204, {}, ""] }
     end
 
-    assert_equal 204, test_client.generator.delete(1).status_code
+    assert_equal 204, test_client.generators.delete(1).status_code
   end
 end

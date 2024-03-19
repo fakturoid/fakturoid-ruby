@@ -9,7 +9,7 @@ class Fakturoid::Api::UserTest < Fakturoid::TestCase
       stub.get("user.json") { |_env| [200, { content_type: "application/json" }, response_data.to_json] }
     end
 
-    assert_equal 5, test_client.user.current.id
+    assert_equal 5, test_client.users.current.id
   end
 
   should "get all" do
@@ -18,6 +18,6 @@ class Fakturoid::Api::UserTest < Fakturoid::TestCase
       stub.get("users.json") { |_env| [200, { content_type: "application/json" }, response_data.to_json] }
     end
 
-    assert_equal 1, test_client.user.all.body.size
+    assert_equal 1, test_client.users.all.body.size
   end
 end

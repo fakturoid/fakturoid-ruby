@@ -9,7 +9,7 @@ class Fakturoid::Api::EventTest < Fakturoid::TestCase
       stub.get("events.json") { |_env| [200, { content_type: "application/json" }, response_data.to_json] }
     end
 
-    assert_equal 1, test_client.event.all.body.size
+    assert_equal 1, test_client.events.all.body.size
   end
 
   should "get paid" do
@@ -18,6 +18,6 @@ class Fakturoid::Api::EventTest < Fakturoid::TestCase
       stub.get("events/paid.json") { |_env| [200, { content_type: "application/json" }, response_data.to_json] }
     end
 
-    assert_equal 1, test_client.event.paid.body.size
+    assert_equal 1, test_client.events.paid.body.size
   end
 end

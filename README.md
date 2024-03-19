@@ -99,7 +99,7 @@ end
 You may need to set account slug dynamically:
 
 ```ruby
-client.account = client.user.current.body["accounts"].first["slug"]
+client.account = client.users.current.body["accounts"].first["slug"]
 ```
 
 And if you need to create a separate client for a different account:
@@ -139,7 +139,7 @@ by passing a `page` parameter: `client.some_resource.all(page: 2)`.
 Get current user information along with a list of accounts he/she has access to
 
 ```ruby
-response = client.user.current
+response = client.users.current
 response.status_code # Returns response HTTP code.
 response.body # Contains hash with returned body (JSON is parsed automatically).
 ```
@@ -154,7 +154,7 @@ response.name # Alternative way of getting the name of your company.
 Get a list of all account users:
 
 ```ruby
-response = client.user.all
+response = client.users.all
 ```
 
 ### [Account Resource](https://www.fakturoid.cz/api/v3/account)
@@ -170,7 +170,7 @@ response = client.account.current
 Get a list of bank accounts for current account:
 
 ```ruby
-response = client.bank_account.all
+response = client.bank_accounts.all
 ```
 
 ### [Number Format Resource](https://www.fakturoid.cz/api/v3/number-formats)
@@ -178,7 +178,7 @@ response = client.bank_account.all
 Get a list of invoice number formats for current account:
 
 ```ruby
-response = client.number_format.invoices
+response = client.number_formats.invoices
 ```
 
 ### [Subject Resource](https://www.fakturoid.cz/api/v3/subjects)
@@ -186,37 +186,37 @@ response = client.number_format.invoices
 Get a list of subjects:
 
 ```ruby
-response = client.subject.all(page: 2)
+response = client.subjects.all(page: 2)
 ```
 
 Fulltext search:
 
 ```ruby
-response = client.subject.search(query: "Client name")
+response = client.subjects.search(query: "Client name")
 ```
 
 Get a specific subject:
 
 ```ruby
-response = client.subject.find(subject_id)
+response = client.subjects.find(subject_id)
 ```
 
 Create a new subject:
 
 ```ruby
-response = client.subject.create(name: "New client")
+response = client.subjects.create(name: "New client")
 ```
 
 Update a subject:
 
 ```ruby
-response = client.subject.update(subject_id, name: "Updated client")
+response = client.subjects.update(subject_id, name: "Updated client")
 ```
 
 Delete a subject:
 
 ```ruby
-client.subject.delete subject_id
+client.subjects.delete(subject_id)
 ```
 
 ### [Invoice Resource](https://www.fakturoid.cz/api/v3/invoices)
@@ -224,28 +224,28 @@ client.subject.delete subject_id
 Get a list of invoices:
 
 ```ruby
-response = client.invoice.all
+response = client.invoices.all
 ```
 
 Fulltext search:
 
 ```ruby
-response = client.invoice.search(query: "Client name")
-response = client.invoice.search(tags: "Housing")
-response = client.invoice.search(tags: ["Housing", "Rent"])
-response = client.invoice.search(query: "Client name", tags: ["Housing"])
+response = client.invoices.search(query: "Client name")
+response = client.invoices.search(tags: "Housing")
+response = client.invoices.search(tags: ["Housing", "Rent"])
+response = client.invoices.search(query: "Client name", tags: ["Housing"])
 ```
 
 Get invoice details:
 
 ```ruby
-response = client.invoice.find(invoice_id)
+response = client.invoices.find(invoice_id)
 ```
 
 Download invoice in PDF format:
 
 ```ruby
-response = client.invoice.download_pdf(invoice_id)
+response = client.invoices.download_pdf(invoice_id)
 
 File.open("/path/to/file.pdf", "wb") do |f|
   f.write(response.body)
@@ -255,7 +255,7 @@ end
 Download an attachment:
 
 ```ruby
-response = client.invoice.download_attachment(invoice_id, attachment_id)
+response = client.invoices.download_attachment(invoice_id, attachment_id)
 
 File.open("/path/to/attachment.pdf", "wb") do |f|
   f.write(response.body)
@@ -265,7 +265,7 @@ end
 Invoice actions (eg. lock invoice, cancel, etc., full list is in the API documentation):
 
 ```ruby
-response = client.invoice.fire(invoice_id, "lock")
+response = client.invoices.fire(invoice_id, "lock")
 ```
 
 Create an invoice:
@@ -283,19 +283,19 @@ data = {
     }
   ]
 }
-response = client.invoice.create(data)
+response = client.invoices.create(data)
 ```
 
 Update an invoice:
 
 ```ruby
-response = client.invoice.update(invoice_id, number: "2015-0015")
+response = client.invoices.update(invoice_id, number: "2015-0015")
 ```
 
 Delete an invoice:
 
 ```ruby
-response = client.invoice.delete(invoice_id)
+response = client.invoices.delete(invoice_id)
 ```
 
 ### [Invoice Payment Resource](https://www.fakturoid.cz/api/v3/invoice-payments)
@@ -303,21 +303,21 @@ response = client.invoice.delete(invoice_id)
 Create an invoice payment:
 
 ```ruby
-response = client.invoice_payment.create(invoice_id, paid_on: Date.today)
-response = client.invoice_payment.create(invoice_id, amount: "500")
+response = client.invoice_payments.create(invoice_id, paid_on: Date.today)
+response = client.invoice_payments.create(invoice_id, amount: "500")
 ````
 
 Create a tax document for a payment:
 
 ```ruby
-response = client.invoice_payment.create_tax_document(invoice_id, payment_id)
-tax_document_response = client.invoice.find(response.tax_document_id)
+response = client.invoice_payments.create_tax_document(invoice_id, payment_id)
+tax_document_response = client.invoices.find(response.tax_document_id)
 ````
 
 Delete a payment:
 
 ```ruby
-response = client.invoice_payment.delete(invoice_id, payment_id)
+response = client.invoice_payments.delete(invoice_id, payment_id)
 ```
 
 ### [Invoice Message Resource](https://www.fakturoid.cz/api/v3/invoice-messages)
@@ -332,7 +332,7 @@ data = {
   message: "Hi,\n\nyou can find invoice no. #no# on the following page #link#\n\nHave a nice day"
 }
 
-response = client.invoice_message.create(invoice_id, data)
+response = client.invoice_messages.create(invoice_id, data)
 ```
 
 ### [Expense Resource](https://www.fakturoid.cz/api/v3/expenses)
@@ -340,28 +340,28 @@ response = client.invoice_message.create(invoice_id, data)
 Get a list of expenses:
 
 ```ruby
-response = client.expense.all
+response = client.expenses.all
 ```
 
 Fulltext search:
 
 ```ruby
-response = client.expense.search(query: "Supplier name")
-response = client.expense.search(tags: "Housing")
-response = client.expense.search(tags: ["Housing", "Rent"])
-response = client.expense.search(query: "Supplier name", tags: ["Housing"])
+response = client.expenses.search(query: "Supplier name")
+response = client.expenses.search(tags: "Housing")
+response = client.expenses.search(tags: ["Housing", "Rent"])
+response = client.expenses.search(query: "Supplier name", tags: ["Housing"])
 ```
 
 Get expense details:
 
 ```ruby
-response = client.expense.find(expense_id)
+response = client.expenses.find(expense_id)
 ```
 
 Download an attachment:
 
 ```ruby
-response = client.expense.download_attachment(expense_id, attachment_id)
+response = client.expenses.download_attachment(expense_id, attachment_id)
 
 File.open("/path/to/attachment.pdf", "wb") do |f|
   f.write(response.body)
@@ -371,7 +371,7 @@ end
 Expense actions (eg. lock expense etc., full list is in the API documentation):
 
 ```ruby
-response = client.expense.fire(expense_id, "lock")
+response = client.expenses.fire(expense_id, "lock")
 ```
 
 Create an expense:
@@ -389,19 +389,19 @@ data = {
     }
   ]
 }
-response = client.expense.create(data)
+response = client.expenses.create(data)
 ```
 
 Update an expense:
 
 ```ruby
-response = client.expense.update(expense_id, number: "N20240201")
+response = client.expenses.update(expense_id, number: "N20240201")
 ```
 
 Delete an expense:
 
 ```ruby
-response = client.expense.delete(expense_id)
+response = client.expenses.delete(expense_id)
 ```
 
 ### [Expense Payment Resource](https://www.fakturoid.cz/api/v3/expense-payments)
@@ -409,14 +409,14 @@ response = client.expense.delete(expense_id)
 Create an expense payment:
 
 ```ruby
-response = client.expense_payment.create(expense_id, paid_on: Date.today)
-response = client.expense_payment.create(expense_id, amount: "500")
+response = client.expense_payments.create(expense_id, paid_on: Date.today)
+response = client.expense_payments.create(expense_id, amount: "500")
 ````
 
 Delete a payment:
 
 ```ruby
-response = client.expense_payment.delete(expense_id, payment_id)
+response = client.expense_payments.delete(expense_id, payment_id)
 ```
 
 ### [Inbox File Resource](https://www.fakturoid.cz/api/v3/inbox-files)
@@ -424,7 +424,7 @@ response = client.expense_payment.delete(expense_id, payment_id)
 Get a list of inbox files:
 
 ```ruby
-response = client.inbox_file.all
+response = client.inbox_files.all
 ```
 
 Create an inbox file:
@@ -432,7 +432,7 @@ Create an inbox file:
 ```ruby
 require "base64"
 
-client.inbox_file.create(
+client.inbox_files.create(
   attachment: "data:application/pdf;base64,#{Base64.urlsafe_encode64(File.read("some-file.pdf"))}",
   filename: "some-file.pdf", # This is optional and defaults to `attachment.{extension}`.
   send_to_ocr: true          # Also optional
@@ -442,14 +442,14 @@ client.inbox_file.create(
 Send a file to OCR (data extraction service):
 
 ```ruby
-client.inbox_file.send_to_ocr(inbox_file_id)
+client.inbox_files.send_to_ocr(inbox_file_id)
 ```
 
 Download a file:
 
 ```ruby
-filename = client.inbox_file.find(inbox_file_id).filename
-response = client.inbox_file.download(inbox_file_id)
+filename = client.inbox_files.find(inbox_file_id).filename
+response = client.inbox_files.download(inbox_file_id)
 
 File.open("/path/to/file.pdf", "wb") do |f|
   f.write(response.body)
@@ -459,7 +459,7 @@ end
 Delete a file:
 
 ```ruby
-response = client.inbox_file.delete(inbox_file_id)
+response = client.inbox_files.delete(inbox_file_id)
 ```
 
 ### [InventoryItem Resource](https://www.fakturoid.cz/api/v3/inventory-items)
@@ -467,32 +467,32 @@ response = client.inbox_file.delete(inbox_file_id)
 Get a list of inventory items:
 
 ```ruby
-response = client.inventory_item.all
-response = client.inventory_item.all(sku: "SKU1234") # Filter by SKU code
+response = client.inventory_items.all
+response = client.inventory_items.all(sku: "SKU1234") # Filter by SKU code
 ```
 
 Get a list of archived inventory items:
 
 ```ruby
-response = client.inventory_item.archived
+response = client.inventory_items.archived
 ```
 
 Get a list of inventory items that are running low on quantity:
 
 ```ruby
-response = client.inventory_item.low_quantity
+response = client.inventory_items.low_quantity
 ```
 
 Search inventory items (searches in `name`, `article_number` and `sku`):
 
 ```ruby
-response = client.inventory_item.search(query: "Item name")
+response = client.inventory_items.search(query: "Item name")
 ```
 
 Get a single inventory item:
 
 ```ruby
-response = client.inventory_item.find(inventory_item_id)
+response = client.inventory_items.find(inventory_item_id)
 ```
 
 Create an inventory item:
@@ -506,31 +506,31 @@ data = {
   native_purchase_price: 500,
   native_retail_price: 1000
 }
-response = client.inventory_item.create(data)
+response = client.inventory_items.create(data)
 ```
 
 Update an inventory item:
 
 ```ruby
-response = client.inventory_item.update(inventory_item_id, name: "Another name")
+response = client.inventory_items.update(inventory_item_id, name: "Another name")
 ```
 
 Delete an inventory item:
 
 ```ruby
-response = client.inventory_item.delete(inventory_item_id)
+response = client.inventory_items.delete(inventory_item_id)
 ```
 
 Archive an inventory item:
 
 ```ruby
-response = client.inventory_item.archive(inventory_item_id)
+response = client.inventory_items.archive(inventory_item_id)
 ```
 
 Unarchive an inventory item:
 
 ```ruby
-response = client.inventory_item.unarchive(inventory_item_id)
+response = client.inventory_items.unarchive(inventory_item_id)
 ```
 
 ### [InventoryMove Resource](https://www.fakturoid.cz/api/v3/inventory-moves)
@@ -538,25 +538,25 @@ response = client.inventory_item.unarchive(inventory_item_id)
 Get a list of inventory moves across all inventory items:
 
 ```ruby
-response = client.inventory_move.all
+response = client.inventory_moves.all
 ```
 
 Get a list of inventory moves for a single inventory item:
 
 ```ruby
-response = client.inventory_move.all(inventory_item_id: inventory_item_id)
+response = client.inventory_moves.all(inventory_item_id: inventory_item_id)
 ```
 
 Get a single inventory move:
 
 ```ruby
-response = client.inventory_move.find(inventory_item_id, inventory_move_id)
+response = client.inventory_moves.find(inventory_item_id, inventory_move_id)
 ```
 
 Create a stock-in inventory move:
 
 ```ruby
-response = client.inventory_move.create(
+response = client.inventory_moves.create(
   inventory_item_id,
   direction: "in",
   moved_on: Date.today,
@@ -570,7 +570,7 @@ response = client.inventory_move.create(
 Create a stock-out inventory move:
 
 ```ruby
-response = client.inventory_move.create(
+response = client.inventory_moves.create(
   inventory_item_id,
   direction: "out",
   moved_on: Date.today,
@@ -588,13 +588,13 @@ data = {
   private_note: "Text"
   # Plus other fields if necessary
 }
-response = client.inventory_move.update(inventory_item_id, inventory_move_id, data)
+response = client.inventory_moves.update(inventory_item_id, inventory_move_id, data)
 ```
 
 Delete an inventory move:
 
 ```ruby
-response = client.inventory_move.delete(inventory_item_id, inventory_move_id)
+response = client.inventory_moves.delete(inventory_item_id, inventory_move_id)
 ```
 
 ### [Generator Resource](https://www.fakturoid.cz/api/v3/generators)
@@ -602,13 +602,13 @@ response = client.inventory_move.delete(inventory_item_id, inventory_move_id)
 Get a list of generators:
 
 ```ruby
-response = client.generator.all
+response = client.generators.all
 ```
 
 Get generator details:
 
 ```ruby
-response = client.generator.find(generator_id)
+response = client.generators.find(generator_id)
 ```
 
 Create a generator:
@@ -627,19 +627,19 @@ data = {
     }
   ]
 }
-response = client.generator.create(data)
+response = client.generators.create(data)
 ```
 
 Update an generator:
 
 ```ruby
-response = client.generator.update(generator_id, name: "Another name")
+response = client.generators.update(generator_id, name: "Another name")
 ```
 
 Delete an generator:
 
 ```ruby
-response = client.generator.delete(generator_id)
+response = client.generators.delete(generator_id)
 ```
 
 ### [RecurringGenerator Resource](https://www.fakturoid.cz/api/v3/recurring-generators)
@@ -647,13 +647,13 @@ response = client.generator.delete(generator_id)
 Get a list of recurring generators:
 
 ```ruby
-response = client.recurring_generator.all
+response = client.recurring_generators.all
 ```
 
 Get recurring generator details:
 
 ```ruby
-response = client.recurring_generator.find(recurring_generator_id)
+response = client.recurring_generators.find(recurring_generator_id)
 ```
 
 Create a recurring generator:
@@ -674,32 +674,32 @@ data = {
     }
   ]
 }
-response = client.recurring_generator.create(data)
+response = client.recurring_generators.create(data)
 ```
 
 Update a recurring generator:
 
 ```ruby
-response = client.recurring_generator.update(recurring_generator_id, name: "Another name")
+response = client.recurring_generators.update(recurring_generator_id, name: "Another name")
 ```
 
 Delete a recurring generator:
 
 ```ruby
-response = client.recurring_generator.delete(recurring_generator_id)
+response = client.recurring_generators.delete(recurring_generator_id)
 ```
 ### [Event Resource](https://www.fakturoid.cz/api/v3/events)
 
 Get a list of all events:
 
 ```ruby
-response = client.event.all
+response = client.events.all
 ````
 
 Get a list of document-paid events:
 
 ```ruby
-response = client.event.paid
+response = client.events.paid
 ````
 
 ### [Todo Resource](https://www.fakturoid.cz/api/v3/todos)
@@ -707,13 +707,13 @@ response = client.event.paid
 Get a list of all todos:
 
 ```ruby
-response = client.todo.all
+response = client.todos.all
 ````
 
 Toggle a todo completion:
 
 ```ruby
-response = client.todo.toggle_completion(todo_id)
+response = client.todos.toggle_completion(todo_id)
 ```
 
 ## Handling Errors
