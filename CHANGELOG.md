@@ -1,3 +1,14 @@
+## 1.0.0
+
+- Implement Fakturoid API v3.
+- Change interface due to OAuth 2.0. Please refer to the [README.md](README.md) for more information.
+
+  ```ruby
+  client = Fakturoid.client
+  client.invoices.all
+  client.expenses.update(expense_id, number: "N20240201")
+  ```
+
 ## 0.5.0
 
 - Add support for inventory items and moves.
