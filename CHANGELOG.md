@@ -1,4 +1,4 @@
-## Unreleased
+## 1.0.0
 
 - Implement Fakturoid API v3.
 - Change interface due to OAuth 2.0. Please refer to the [README.md](README.md) for more information.
