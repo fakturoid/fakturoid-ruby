@@ -750,6 +750,13 @@ All exceptions except `ConfigurationError` contain following attributes:
   </tbody>
 </table>
 
+## Contributing
+
+- Make a pull request with requested changes.
+- Make sure the pull request is as small as possible. If you encounter something that should be changed but is unrelated,
+  please make a separate pull request for that.
+- Do not change the version number inside the pull request – this will be done after it is merged.
+
 ## Development
 
 ```sh
