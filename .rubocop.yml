@@ -2,10 +2,6 @@ AllCops:
   TargetRubyVersion: 3.2
   SuggestExtensions: false
   NewCops: disable
-  Exclude:
-    - 'Rakefile'
-    - 'fakturoid.gemspec'
-    - 'vendor/**/*'
 
 Style/Documentation:
   Enabled: false
@@ -15,11 +11,11 @@ Layout/LineLength:
 
 Metrics/ClassLength:
   Exclude:
-    - 'test/**/*'
+    - "test/**/*"
 
 Metrics/BlockLength:
   Exclude:
-      - 'test/**/*'
+      - "test/**/*"
 
 Layout/AccessModifierIndentation:
   EnforcedStyle: outdent
@@ -35,7 +31,7 @@ Layout/TrailingWhitespace:
 
 Style/ClassAndModuleChildren:
   Exclude:
-    - 'test/**/*'
+    - "test/**/*"
 
 Metrics/PerceivedComplexity:
   Enabled: false
@@ -51,11 +47,11 @@ Metrics/CyclomaticComplexity:
 
 Style/NegatedIf:
   Exclude:
-    - 'lib/fakturoid/response.rb'
+    - "lib/fakturoid/response.rb"
 
 Naming/MemoizedInstanceVariableName:
   Exclude:
-    - 'lib/fakturoid/api.rb'
+    - "lib/fakturoid/api.rb"
 
 Layout/EmptyLineAfterGuardClause:
   Enabled: false
@@ -68,7 +64,7 @@ Style/HashSyntax:
 
 Style/RescueStandardError:
   Exclude:
-    - 'test/response_test.rb'
+    - "test/response_test.rb"
 
 Style/TrivialAccessors:
   Enabled: false
