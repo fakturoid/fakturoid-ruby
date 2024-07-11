@@ -733,13 +733,13 @@ response = client.webhooks.find(webhook_id)
 Create a webhook:
 
 ```ruby
-response = client.webhooks.create(url: "https://example.com/webhook", events: %w[invoice_created])
+response = client.webhooks.create(webhook_url: "https://example.com/webhook", events: %w[invoice_created])
 ```
 
 Update a webhook:
 
 ```ruby
-response = client.webhooks.update(webhook_id, url: "https://example.com/webhook")
+response = client.webhooks.update(webhook_id, webhook_url: "https://example.com/webhook")
 ```
 
 Delete a webhook:

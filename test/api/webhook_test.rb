@@ -27,7 +27,7 @@ class Fakturoid::Api::WebhookTest < Fakturoid::TestCase
       stub.post("webhooks.json") { |_env| [201, { content_type: "application/json" }, response_data.to_json] }
     end
 
-    assert_equal 1, test_client.webhooks.create(url: "https://example.com/webhook", events: %w[invoice_created]).id
+    assert_equal 1, test_client.webhooks.create(webhook_url: "https://example.com/webhook", events: %w[invoice_created]).id
   end
 
   should "update record" do
@@ -36,7 +36,7 @@ class Fakturoid::Api::WebhookTest < Fakturoid::TestCase
       stub.patch("webhooks/1.json") { |_env| [200, { content_type: "application/json" }, response_data.to_json] }
     end
 
-    assert_equal 1, test_client.webhooks.update(1, url: "https://example.com/webhook").id
+    assert_equal 1, test_client.webhooks.update(1, webhook_url: "https://example.com/webhook").id
   end
 
   should "delete record" do
