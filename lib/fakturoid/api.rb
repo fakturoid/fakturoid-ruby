@@ -20,6 +20,7 @@ require_relative "api/recurring_generator"
 require_relative "api/subject"
 require_relative "api/todo"
 require_relative "api/user"
+require_relative "api/webhook"
 
 module Fakturoid
   module Api
@@ -89,6 +90,10 @@ module Fakturoid
 
     def users
       @users ||= User.new(self)
+    end
+
+    def webhooks
+      @webhooks ||= Webhook.new(self)
     end
   end
 end

@@ -1,3 +1,7 @@
+## Unreleased
+
+- Add support for [webhooks](https://www.fakturoid.cz/api/v3/webhooks).
+
 ## 1.0.0
 
 - Implement Fakturoid API v3.

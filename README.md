@@ -716,6 +716,38 @@ Toggle a todo completion:
 response = client.todos.toggle_completion(todo_id)
 ```
 
+### [Webhook Resource](https://www.fakturoid.cz/api/v3/webhooks)
+
+Get a list of all webhooks:
+
+```ruby
+response = client.webhooks.all
+```
+
+Get a single webhook:
+
+```ruby
+response = client.webhooks.find(webhook_id)
+```
+
+Create a webhook:
+
+```ruby
+response = client.webhooks.create(webhook_url: "https://example.com/webhook", events: %w[invoice_created])
+```
+
+Update a webhook:
+
+```ruby
+response = client.webhooks.update(webhook_id, webhook_url: "https://example.com/webhook")
+```
+
+Delete a webhook:
+
+```ruby
+response = client.webhooks.delete(webhook_id)
+```
+
 ## Handling Errors
 
 The Fakturoid gem raises exceptions if server responds with an error.
