@@ -1,4 +1,4 @@
-## Unreleased
+## 1.1.0
 
 - Add support for [webhooks](https://www.fakturoid.cz/api/v3/webhooks).
 
